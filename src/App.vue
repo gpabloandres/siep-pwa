@@ -2,19 +2,34 @@
   <v-app>
     <v-navigation-drawer
       persistent
-      :mini-variant="miniVariant"
-      :clipped="clipped"
       v-model="drawer"
       enable-resize-watcher
       fixed
       app
     >
+
+      <v-toolbar flat class="transparent">
+        <v-list class="pa-0">
+          <v-list-tile avatar>
+            <v-list-tile-avatar>
+              <img src="https://randomuser.me/api/portraits/men/85.jpg" >
+            </v-list-tile-avatar>
+
+            <v-list-tile-content>
+              <v-list-tile-title>Montoto Ramirez</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </v-list>
+      </v-toolbar>
+      <v-divider></v-divider>
+
       <!-- MENU DE NAVEGACION !-->
       <v-list>
         <v-list-tile
           value="true"
           v-for="(item, i) in items"
           :key="i"
+          :to="{path:item.path}"
         >
           <v-list-tile-action>
             <v-icon v-html="item.icon"></v-icon>
@@ -30,7 +45,6 @@
       app
       color="primary"
       dark
-      :clipped-left="clipped"
     >
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title v-text="title"></v-toolbar-title>
@@ -76,13 +90,26 @@ export default {
     return {
       drawer: true,
       fixed: false,
-      items: [{
-        icon: 'home',
-        title: 'Inicio'
-      }],
+      items: [
+        {
+          icon: 'home',
+          title: 'Inicio',
+          path: '/'
+        },
+        {
+          icon: 'edit',
+          title: 'Inscripciones',
+          path: '/inscripciones'
+        }
+      ],
       right: true,
       rightDrawer: false,
       title: 'Siep'
+    }
+  },
+  methods: {
+    navegar (path) {
+      console.log(path);
     }
   },
   name: 'App'
