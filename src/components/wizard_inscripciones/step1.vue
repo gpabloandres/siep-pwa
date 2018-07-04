@@ -5,46 +5,7 @@
         <v-combobox
                 v-model="select"
                 :items="items"
-                label="Select a favorite activity or create a new one"
-        ></v-combobox>
-      </v-flex>
-      <v-flex xs12>
-        <v-combobox
-                v-model="select"
-                :items="items"
-                chips
-                label="I use chips"
-        ></v-combobox>
-      </v-flex>
-      <v-flex xs12>
-        <v-combobox
-                v-model="select"
-                :items="items"
-                chips
-                label="I use a scoped slot"
-        >
-          <template slot="selection" slot-scope="data">
-            <v-chip
-                    :selected="data.selected"
-                    :disabled="data.disabled"
-                    :key="JSON.stringify(data.item)"
-                    class="v-chip--select-multi "
-                    @input="data.parent.selectItem(data.item)"
-            >
-              <v-avatar class="accent white--text">
-                {{ data.item.slice(0, 1).toUpperCase() }}
-              </v-avatar>
-              {{ data.item }}
-            </v-chip>
-          </template>
-        </v-combobox>
-      </v-flex>
-      <v-flex xs12>
-        <v-combobox
-                v-model="select"
-                chips
-                label="I'm readonly"
-                readonly
+                label="Seleccionar centro"
         ></v-combobox>
       </v-flex>
     </v-layout>
@@ -52,16 +13,34 @@
 </template>
 
 <script>
+  import axios from 'axios'
+
   export default {
     data () {
       return {
-        select: 'Programming',
-        items: [
-          'Programming',
-          'Design',
-          'Vue',
-          'Vuetify'
-        ]
+        apiUrl: 'https://api.sieptdf.org/api',
+        error: '',
+        select: '',
+        items: []
+      }
+    },
+    created: function () {
+      this.formOption();
+    },
+    methods: {
+      formOption: function () {
+        var vm = this;
+        axios.get(vm.apiUrl+'/forms/centros')
+        .then(function (response) {
+          let render = response.data.map(function(x) {
+            return x.nombre;
+          });
+
+          vm.items = render;
+        })
+        .catch(function (error) {
+          vm.error = error.message;
+        });
       }
     }
   }
