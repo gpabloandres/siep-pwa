@@ -43,7 +43,7 @@
     </v-navigation-drawer>
     <v-toolbar
       app
-      color="primary"
+      color="blue lighten-2"
       dark
     >
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>

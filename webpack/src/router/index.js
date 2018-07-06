@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/pages/Home'
-import Inscripciones from '@/pages/Inscripciones'
+import Home from '@/pages/Home/Home'
+import Inscripciones from '@/pages/Inscripciones/Inscripciones'
 
 Vue.use(Router)
 
