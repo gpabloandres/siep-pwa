@@ -18,19 +18,20 @@
   export default {
     data () {
       return {
-        apiUrl: 'https://api.sieptdf.org/api',
+        apigw: process.env.SIEP_API_GW_INGRESS,
         error: '',
         select: '',
         items: []
       }
     },
     created: function () {
+      console.log(process.env);
       this.formOption();
     },
     methods: {
       formOption: function () {
         var vm = this;
-        axios.get(vm.apiUrl+'/forms/centros')
+        axios.get(vm.apigw+'/api/forms/centros')
         .then(function (response) {
           let render = response.data.map(function(x) {
             return x.nombre;
