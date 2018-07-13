@@ -28,6 +28,12 @@
       console.log(process.env);
       this.formOption();
     },
+    // Ejemplo change combobox
+    watch: {
+      select(valor) {
+        store.commit('update_nombre_completo',valor);
+      }
+    },
     methods: {
       formOption: function () {
         var vm = this;
