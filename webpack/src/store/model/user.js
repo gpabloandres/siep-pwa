@@ -2,7 +2,7 @@
 
 const module = {
   state: {
-    nombre_completo: "Pepe Galarza"
+    nombre_completo: "Social User"
   },
   mutations: {
     update_nombre_completo(state,payload) {
