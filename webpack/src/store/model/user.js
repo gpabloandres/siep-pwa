@@ -18,6 +18,7 @@ const module = {
     comentarios:"",
     loggedInStatus: true,
     authToken: '',
+    authApi: {},
     porcentaje_perfil: 0
   },
   mutations: {
@@ -26,6 +27,9 @@ const module = {
     },
     addWebToken: function(state, webToken){
       state.authToken = webToken;
+    },
+    updateAuthApi: function(state, apiResponse){
+      state.authApi = apiResponse;
     },
     removeWebToken: function(state){
       state.authToken = '';
@@ -83,18 +87,70 @@ const module = {
     }
   },
   actions: {
+    // Extrae el token de la URL e inicia el login
+    extractToken:function(context){
+      var parsedUrl = new URL(window.location.href);
+      var token = parsedUrl.searchParams.get("token");
+      if(token !== null){
+        context.dispatch('login', {token : token});
+      }else{
+        context.dispatch('tokenMissing');
+      }
+    },
+    // Guarda el token en el modelo
     login: function(context, data){
-      context.commit('addWebToken', data.token); // pass the webtoken as payload to the mutation
+      context.commit('addWebToken', data.token);
+      context.dispatch('getUserData');
       router.push({
-        path: '/home',
+        path: '/home'
       });
     },
+    // Usuario autenticado con exito, retorna datos de usuario desde api
+    loginSuccess: function({state}){
+      console.log('user.loginSuccess()',state);
+      router.push({
+        path: '/home'
+      });
+    },
+    // No existe token
+    tokenMissing: function(context, data){
+      console.log('User not logged in, token missing');
+      router.push({
+        path: '/'
+      });
+    },
+    // Eliminar token del modelo
     logout: function(context){
-      //your logout functionality
       context.commit('removeWebToken');
       router.push({
-        path: '/home',
+        path: '/home'
       });
+    },
+    // No existe token
+    getUserData: function({commit,dispatch,state}) {
+      const curl = axios.create({
+        baseURL: process.env.SIEP_API_GW_INGRESS
+      });
+      // En todas las request envia el token por header
+      curl.defaults.headers.common['Authorization'] = `Bearer ${state.authToken}`;
+
+      curl.get('/auth/social/me')
+      .then(function (response) {
+        // handle success
+        commit('updateAuthApi',response.data);
+        dispatch('loginSuccess');
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error.response.data);
+      });
+
+      /*return new Promise((resolve, reject) => {
+          setTimeout(() => {
+          console.log('DONE get UserData');
+          resolve()
+        }, 9000);
+      })*/
     }
   }
 };

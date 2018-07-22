@@ -40,7 +40,6 @@
     components: { UserSidebar, MenuSidebar},
     data () {
       return {
-        title: 'Siep',
         drawer: false,
         toolbar_disabled:true
       }
@@ -49,6 +48,10 @@
       menu_toolbar() {
         return store.state.menu_toolbar;
       }
+    },
+    created(){
+      console.log('APP Created');
+      store.dispatch('extractToken');
     },
     name: 'App'
   }
