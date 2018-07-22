@@ -7,12 +7,15 @@ import App from './App'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 
+// Material Designs Icons
+import "vue-material-design-icons/styles.css"
+
 // Source
 import router from './router'
 import store from './store'
 
-Vue.use(Vuetify)
-Vue.config.productionTip = false
+Vue.use(Vuetify);
+Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
 new Vue({

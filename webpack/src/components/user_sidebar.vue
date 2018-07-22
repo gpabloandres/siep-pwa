@@ -7,7 +7,7 @@
         </v-list-tile-avatar>
 
         <v-list-tile-content>
-          <v-list-tile-title>{{user.nombre_completo}}</v-list-tile-title>
+          <v-list-tile-title>{{user.nombres}}</v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
     </v-list>

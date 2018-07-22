@@ -18,13 +18,9 @@
     </v-navigation-drawer>
 
     <!-- Menu toolbar !-->
-    <v-toolbar
-      app
-      color="primary"
-      dark
-    >
+    <v-toolbar app color="orange darken-1" dark >
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title v-text="title"></v-toolbar-title>
+      <v-toolbar-title v-text="menu_toolbar.title" ></v-toolbar-title>
     </v-toolbar>
 
     <!-- Contenido de navegacion !-->
@@ -39,12 +35,19 @@
   import UserSidebar from './components/user_sidebar.vue'
   import MenuSidebar from './components/menu_sidebar.vue'
 
+
   export default {
-    components: { UserSidebar, MenuSidebar },
+    components: { UserSidebar, MenuSidebar},
     data () {
       return {
         title: 'Siep',
-        drawer: false
+        drawer: false,
+        toolbar_disabled:true
+      }
+    },
+    computed: {
+      menu_toolbar() {
+        return store.state.menu_toolbar;
       }
     },
     name: 'App'
