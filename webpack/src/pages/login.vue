@@ -2,7 +2,7 @@
     <v-container fluid>
         <v-slide-y-transition mode="out-in">
             <v-layout column align-center>
-                <img src="@/assets/escudo.png" alt="SIEP" class="mb-5">
+                <img src="@/assets/escudo_color.jpg" alt="SIEP" class="mb-5">
 
                 <v-subheader>
                     Ingrese con las Redes Sociales
@@ -10,8 +10,8 @@
                 <v-divider></v-divider>
 
                 <div class="text-xs-center">
-                    <v-btn round color="indigo darken-3" dark small @click="go"><FacebookIcon style="font-size:15px"/></v-btn>
-                    <v-btn round color="red darken-1" dark small @click="go"><GoogleIcon style="font-size:15px"/></v-btn>
+                    <v-btn round color="indigo darken-3" dark small @click="goTo('facebook')"><FacebookIcon style="font-size:15px"/></v-btn>
+                    <v-btn round color="red darken-1" dark small @click="goTo('google')"><GoogleIcon style="font-size:15px"/></v-btn>
                 </div>
 
 
@@ -27,16 +27,34 @@
   import router from '../router'
 
   export default {
+    created(){
+      this.extractToken()
+    },
     data(){
       return{
-        color: '#5C6BC0'
+        color: '#5C6BC0',
+        apigw: process.env.SIEP_API_GW_INGRESS,
+        token:''
       }
     },
     components :{ FacebookIcon,GoogleIcon,  },
     name: "login",
     methods:{
-      go : function(){
-        router.push('/inscripciones');
+      goTo : function(social){
+        window.location = this.apigw+'/auth/social/'+social;
+      },
+      logout: function(){
+        store.dispatch('logout');
+      },
+      extractToken:function(){
+        var parsedUrl = new URL(window.location.href);
+        var token = parsedUrl.searchParams.get("token");
+        if(token !== null){
+          console.log(token);
+          store.dispatch('login', {token : token});
+        }else{
+          console.log("No hay Token...");
+        }
       }
     }
   }

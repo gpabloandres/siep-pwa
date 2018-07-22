@@ -1,12 +1,18 @@
 <template>
     <v-container fluid text-xs-center>
-        <div>
-            <v-progress-linear
-                    color="orange darken-1"
-                    height="10"
-                    value="0"
-            ></v-progress-linear>
-        </div>
+        <!--<div>-->
+            <!--<v-breadcrumbs>-->
+                <!--<v-icon slot="divider">forward</v-icon>-->
+
+                <!--<v-breadcrumbs-item-->
+                        <!--v-for="item in items"-->
+                        <!--:disabled="item.disabled"-->
+                        <!--:key="item.text"-->
+                <!--&gt;-->
+                    <!--{{ item.text }}-->
+                <!--</v-breadcrumbs-item>-->
+            <!--</v-breadcrumbs>-->
+        <!--</div>-->
 
         <v-form v-model="valid">
 
@@ -98,7 +104,7 @@
                 ></v-textarea>
             </v-flex>
         </v-form>
-
+        <v-btn color="primary" @click="goBack"><v-icon>navigate_before</v-icon> Volver</v-btn>
         <v-btn color="primary" @click="goForward">Continuar <v-icon>navigate_next</v-icon></v-btn>
     </v-container>
 </template>
@@ -108,7 +114,7 @@
 
   export default {
     created: function(){
-      store.commit('updateTitle',"Inscripciones - Alumnos");
+      store.commit('updateTitle',"Inscripciones - Nuevo Alumno");
     },
     name: "alumno",
     data: () => ({
@@ -141,6 +147,20 @@
       localidades:["Rio Grande","Tolhuin","Ushuaia"],
       direccion:"",
       comentarios:""
+      // items: [
+      //   {
+      //     text: 'Paso 1',
+      //     disabled: false
+      //   },
+      //   {
+      //     text: 'Paso 2',
+      //     disabled: false
+      //   },
+      //   {
+      //     text: 'Paso3',
+      //     disabled: true
+      //   }
+      // ]
     }),
 
     computed: {
@@ -174,6 +194,9 @@
         this.alumno.comentarios = this.comentarios;
 
         router.push('/inscripciones/centros');
+      },
+      goBack:function(){
+        router.go(-1);
       },
       formatDate (date) {
         if (!date) return null

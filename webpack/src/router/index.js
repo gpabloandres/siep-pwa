@@ -4,6 +4,7 @@ import Router from 'vue-router'
 // Paginas
 import login from '@/pages/login'
 import home from '@/pages/home'
+import inscripciones_home from '@/pages/inscripciones/home'
 import alumno from '@/pages/inscripciones/alumno'
 import centros from '@/pages/inscripciones/centros'
 import adulto_responsable from '@/pages/inscripciones/adulto_responsable'
@@ -25,7 +26,7 @@ export default new Router({
     {
       path: '/inscripciones',
       name: 'inscripciones',
-      component: alumno
+      component: inscripciones_home
     },
     {
       path: '/inscripciones/alumno',

@@ -2,6 +2,7 @@
 
 const module = {
   state: {
+    id:"",
     nombres: "",
     apellidos: "",
     fecha_nac:"",
@@ -15,6 +16,9 @@ const module = {
     comentarios:""
   },
   mutations: {
+    update_id(state,valor){
+      state.id = valor
+    },
     update_nombres(state,valor) {
       state.nombres = valor
     },
