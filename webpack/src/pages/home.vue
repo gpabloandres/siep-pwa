@@ -67,7 +67,6 @@
         }else{
 
         }
-        console.log(this.user);
       }
     }
   }
