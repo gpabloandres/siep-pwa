@@ -1,22 +1,22 @@
 <template>
     <v-container fluid text-xs-center>
-        <!--<div>-->
-            <!--<v-breadcrumbs>-->
-                <!--<v-icon slot="divider">forward</v-icon>-->
+        <div>
+            <v-breadcrumbs>
+                <v-icon slot="divider">forward</v-icon>
 
-                <!--<v-breadcrumbs-item-->
-                        <!--v-for="item in items"-->
-                        <!--:disabled="item.disabled"-->
-                        <!--:key="item.text"-->
-                <!--&gt;-->
-                    <!--{{ item.text }}-->
-                <!--</v-breadcrumbs-item>-->
-            <!--</v-breadcrumbs>-->
-        <!--</div>-->
+                <v-breadcrumbs-item
+                        v-for="item in items"
+                        :disabled="item.disabled"
+                        :key="item.text"
+                >
+                    {{ item.text }}
+                </v-breadcrumbs-item>
+            </v-breadcrumbs>
+        </div>
 
-        <v-form v-model="valid">
+        <v-flex xs12 sm6 md4 lg4>
+            <v-form v-model="valid">
 
-            <v-flex xs12 lg6>
                 <v-menu
                         :close-on-content-click="false"
                         v-model="menu_date_picker"
@@ -38,62 +38,60 @@
                     ></v-text-field>
                     <v-date-picker v-model="date" no-title @input="menu_date_picker = false" :rules="dateRules" required></v-date-picker>
                 </v-menu>
-            </v-flex>
 
-            <v-text-field
-                    v-model="nombres"
-                    :rules="imputRules"
-                    label="Nombres"
-                    required
-            ></v-text-field>
-            <v-text-field
-                    v-model="apellidos"
-                    :rules="imputRules"
-                    label="Apellidos"
-                    required
-            ></v-text-field>
-            <v-combobox
-                    v-model="select_sexo"
-                    :items="sexos"
-                    :rules="imputRules"
-                    label="Seleccione Sexo"
-                    required
-            ></v-combobox>
-            <v-combobox
-                    v-model="select_tipo_doc"
-                    :items="tipo_doc"
-                    :rules="imputRules"
-                    label="Tipo de Documento"
-                    required
-            ></v-combobox>
-            <v-text-field
-                    v-model="nro_documento"
-                    :rules="imputRules"
-                    label="Número de Documento"
-                    required
-            ></v-text-field>
-            <v-combobox
-                    v-model="select_provincia"
-                    :items="provincias"
-                    :rules="imputRules"
-                    label="Provincia"
-                    required
-            ></v-combobox>
-            <v-combobox
-                    v-model="select_localidad"
-                    :items="localidades"
-                    :rules="imputRules"
-                    label="Localidad"
-                    required
-            ></v-combobox>
-            <v-text-field
-                    v-model="direccion"
-                    :rules="imputRules"
-                    label="Dirección"
-                    required
-            ></v-text-field>
+                <v-text-field
+                        v-model="nombres"
+                        :rules="imputRules"
+                        label="Nombres"
+                        required
+                ></v-text-field>
+                <v-text-field
+                        v-model="apellidos"
+                        :rules="imputRules"
+                        label="Apellidos"
+                        required
+                ></v-text-field>
+                <v-combobox
+                        v-model="select_sexo"
+                        :items="sexos"
+                        :rules="imputRules"
+                        label="Seleccione Sexo"
+                        required
+                ></v-combobox>
+                <v-combobox
+                        v-model="select_tipo_doc"
+                        :items="tipo_doc"
+                        :rules="imputRules"
+                        label="Tipo de Documento"
+                        required
+                ></v-combobox>
+                <v-text-field
+                        v-model="nro_documento"
+                        :rules="imputRules"
+                        label="Número de Documento"
+                        required
+                ></v-text-field>
+                <v-combobox
+                        v-model="select_provincia"
+                        :items="provincias"
+                        :rules="imputRules"
+                        label="Provincia"
+                        required
+                ></v-combobox>
+                <v-combobox
+                        v-model="select_localidad"
+                        :items="localidades"
+                        :rules="imputRules"
+                        label="Localidad"
+                        required
+                ></v-combobox>
+                <v-text-field
+                        v-model="direccion"
+                        :rules="imputRules"
+                        label="Dirección"
+                        required
+                ></v-text-field>
 
-            <v-flex xs12>
                 <v-textarea
                         v-model="comentarios"
                         name="comentario_alumno"
@@ -102,10 +100,11 @@
                         color="primary"
                         counter="100"
                 ></v-textarea>
-            </v-flex>
-        </v-form>
-        <v-btn color="primary" @click="goBack"><v-icon>navigate_before</v-icon> Volver</v-btn>
-        <v-btn color="primary" @click="goForward">Continuar <v-icon>navigate_next</v-icon></v-btn>
+            </v-form>
+            <v-btn color="primary" @click="goBack"><v-icon>navigate_before</v-icon> Volver</v-btn>
+            <v-btn color="primary" @click="goForward">Continuar <v-icon>navigate_next</v-icon></v-btn>
+        </v-flex>
+
     </v-container>
 </template>
 
@@ -146,21 +145,21 @@
       select_localidad:"",
       localidades:["Rio Grande","Tolhuin","Ushuaia"],
       direccion:"",
-      comentarios:""
-      // items: [
-      //   {
-      //     text: 'Paso 1',
-      //     disabled: false
-      //   },
-      //   {
-      //     text: 'Paso 2',
-      //     disabled: false
-      //   },
-      //   {
-      //     text: 'Paso3',
-      //     disabled: true
-      //   }
-      // ]
+      comentarios:"",
+      items: [
+        {
+          text: 'Paso 1',
+          disabled: false
+        },
+        {
+          text: 'Paso 2',
+          disabled: false
+        },
+        {
+          text: 'Paso3',
+          disabled: true
+        }
+      ]
     }),
 
     computed: {

@@ -14,29 +14,29 @@
             </v-breadcrumbs>
         </div>
 
-        <v-combobox
-                v-model="datos.select_vinculo"
-                :items="items_vinculo"
-                :rules="imputRules"
-                label="Vinculo"
-                required
-        ></v-combobox>
+        <v-flex xs12 sm6 md4 lg3>
+            <v-combobox
+                    v-model="datos.select_vinculo"
+                    :items="items_vinculo"
+                    :rules="imputRules"
+                    label="Vinculo"
+                    required
+            ></v-combobox>
 
-        <v-text-field
-                v-model="datos.nombres"
-                :rules="imputRules"
-                label="Nombres"
-                required
-        ></v-text-field>
+            <v-text-field
+                    v-model="datos.nombres"
+                    :rules="imputRules"
+                    label="Nombres"
+                    required
+            ></v-text-field>
 
-        <v-text-field
-                v-model="datos.apellidos"
-                :rules="imputRules"
-                label="Apellidos"
-                required
-        ></v-text-field>
+            <v-text-field
+                    v-model="datos.apellidos"
+                    :rules="imputRules"
+                    label="Apellidos"
+                    required
+            ></v-text-field>
 
-        <v-flex xs12 lg6>
             <v-menu
                     :close-on-content-click="false"
                     v-model="datos.menu_date_picker"
@@ -58,77 +58,75 @@
                 ></v-text-field>
                 <v-date-picker v-model="datos.fecha_nac" no-title @input="datos.menu_date_picker = false" ></v-date-picker>
             </v-menu>
-        </v-flex>
 
-        <v-combobox
-                v-model="datos.sexo"
-                :items="items_sexo"
-                :rules="imputRules"
-                label="Sexo"
-                required
-        ></v-combobox>
+            <v-combobox
+                    v-model="datos.sexo"
+                    :items="items_sexo"
+                    :rules="imputRules"
+                    label="Sexo"
+                    required
+            ></v-combobox>
 
-        <v-combobox
-                v-model="datos.select_tipo_doc"
-                :items="items_tipo_doc"
-                :rules="imputRules"
-                label="Tipo de Documento"
-                required
-        ></v-combobox>
+            <v-combobox
+                    v-model="datos.select_tipo_doc"
+                    :items="items_tipo_doc"
+                    :rules="imputRules"
+                    label="Tipo de Documento"
+                    required
+            ></v-combobox>
 
-        <v-text-field
-                v-model="datos.nro_documento"
-                :rules="imputRules"
-                label="Número de Documento"
-                hint="Sin Puntos de separación"
-                required
-        ></v-text-field>
+            <v-text-field
+                    v-model="datos.nro_documento"
+                    :rules="imputRules"
+                    label="Número de Documento"
+                    hint="Sin Puntos de separación"
+                    required
+            ></v-text-field>
 
-        <v-text-field
-                v-model="datos.email"
-                :rules="emailRules"
-                label="E-Mail"
-                required
-        ></v-text-field>
+            <v-text-field
+                    v-model="datos.email"
+                    :rules="emailRules"
+                    label="E-Mail"
+                    required
+            ></v-text-field>
 
-        <v-text-field
-                v-model="datos.telefono"
-                :rules="imputRules"
-                label="Teléfono"
-                required
-        ></v-text-field>
+            <v-text-field
+                    v-model="datos.telefono"
+                    :rules="imputRules"
+                    label="Teléfono"
+                    required
+            ></v-text-field>
 
-        <v-text-field
-                v-model="datos.telefono_alternativo"
-                :rules="imputRules"
-                label="Teléfono Alternativo"
-                required
-        ></v-text-field>
+            <v-text-field
+                    v-model="datos.telefono_alternativo"
+                    :rules="imputRules"
+                    label="Teléfono Alternativo"
+                    required
+            ></v-text-field>
 
-        <v-combobox
-                v-model="datos.provincia"
-                :items="items_provincia"
-                :rules="imputRules"
-                label="Provincia"
-                required
-        ></v-combobox>
+            <v-combobox
+                    v-model="datos.provincia"
+                    :items="items_provincia"
+                    :rules="imputRules"
+                    label="Provincia"
+                    required
+            ></v-combobox>
 
-        <v-combobox
-                v-model="datos.localidad"
-                :items="items_localidad"
-                :rules="imputRules"
-                label="Localidad"
-                required
-        ></v-combobox>
+            <v-combobox
+                    v-model="datos.localidad"
+                    :items="items_localidad"
+                    :rules="imputRules"
+                    label="Localidad"
+                    required
+            ></v-combobox>
 
-        <v-text-field
-                v-model="datos.direccion"
-                :rules="imputRules"
-                label="Dirección"
-                required
-        ></v-text-field>
+            <v-text-field
+                    v-model="datos.direccion"
+                    :rules="imputRules"
+                    label="Dirección"
+                    required
+            ></v-text-field>
 
-        <v-flex xs12>
             <v-textarea
                     v-model="datos.comentario"
                     label="Comentarios"
@@ -136,9 +134,11 @@
                     color="primary"
                     counter="100"
             ></v-textarea>
+            <v-btn color="primary" @click="goBack"><v-icon>navigate_before</v-icon> Volver</v-btn>
+            <v-btn color="light-green lighten-1" @click="sendRequest">Guardar</v-btn>
         </v-flex>
-        <v-btn color="primary" @click="goBack"><v-icon>navigate_before</v-icon> Volver</v-btn>
-        <v-btn color="light-green lighten-1" @click="sendRequest">Guardar</v-btn>
+
+
     </v-container>
 </template>
 
