@@ -111,7 +111,7 @@
     name: "centros",
     methods:{
       goForward:function(){
-        router.push('/inscripciones/adulto_responsable');
+        router.push('/inscripciones/finalizar');
       },
       goBack:function(){
         router.go(-1);

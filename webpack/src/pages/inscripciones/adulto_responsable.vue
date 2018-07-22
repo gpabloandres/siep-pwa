@@ -51,7 +51,7 @@
                         slot="activator"
                         v-model="computedDateFormatted"
                         label="Fecha de Nacimiento"
-                        hint="MM/DD/YYYY"
+                        hint="DD/MM/YYYY"
                         persistent-hint
                         prepend-icon="event"
                         readonly
@@ -152,6 +152,7 @@
     },
     name: "adulto_responsable",
     data: ()=>({
+      menu_date_picker: false,
       imputRules: [
         v => !!v || 'Campo Requerido',
         v => (!v || v.length >= 3) || 'El campo debe tener más de 3 caracteres'
@@ -198,12 +199,12 @@
         if (!date) return null;
 
         const [year, month, day] = date.split('-');
-        return `${month}/${day}/${year}`
+        return `${day}/${month}/${year}`
       },
       parseDate (date) {
         if (!date) return null;
 
-        const [month, day, year] = date.split('/');
+        const [day, month, year] = date.split('/');
         return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
       }
     },
