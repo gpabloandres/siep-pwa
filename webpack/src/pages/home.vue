@@ -1,7 +1,7 @@
 <template>
 
   <v-jumbotron>
-    <v-container fill-height>
+    <v-container fluid>
       <v-layout align-center>
         <blockquote>
           <v-flex>
@@ -10,8 +10,8 @@
 
             <v-divider class="my-3"></v-divider>
 
-            <div class="title mb-3 text-xs-center text-sm-center text-md-center text-lg-center">Perfil completado: <strong>{{user.porcentaje_perfil}}%</strong></div>
             <div v-if="user.porcentaje_perfil < 100" >
+              <div class="title mb-3 text-xs-center text-sm-center text-md-center text-lg-center">Perfil completado: <strong>{{user.porcentaje_perfil}}%</strong></div>
               <p class="subheading text-xs-center text-sm-center text-md-center text-lg-center">Te invitamos a que completes tus datos al <strong>100%</strong> para poder continuar.</p>
 
               <v-divider class="my-3"></v-divider>
@@ -23,9 +23,11 @@
               </v-flex>
             </div>
             <div v-else>
+              <p class="subheading text-xs-center text-sm-center text-md-center text-lg-center">Si lo deseás, podés registrar un alumno presionando el botón "Registrar Alumno".</p>
+              <v-divider class="my-3"></v-divider>
               <v-flex class="text-xs-center text-sm-center text-md-center text-lg-center">
                 <v-btn class="mx-0" color="primary" large @click="goToStudent">
-                  <v-icon left>how_to_reg</v-icon>Registrar Alumno
+                  <v-icon left>person_add</v-icon>Registrar Alumno
                 </v-btn>
               </v-flex>
             </div>
