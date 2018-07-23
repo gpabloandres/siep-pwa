@@ -27,17 +27,13 @@
   import router from '../router'
 
   export default {
-    created(){
-      this.extractToken()
-    },
     data(){
       return{
         color: '#5C6BC0',
         apigw: process.env.SIEP_API_GW_INGRESS,
-        token:''
       }
     },
-    components :{ FacebookIcon,GoogleIcon,  },
+    components :{ FacebookIcon,GoogleIcon  },
     name: "login",
     methods:{
       goTo : function(social){
@@ -45,16 +41,6 @@
       },
       logout: function(){
         store.dispatch('logout');
-      },
-      extractToken:function(){
-        var parsedUrl = new URL(window.location.href);
-        var token = parsedUrl.searchParams.get("token");
-        if(token !== null){
-          console.log(token);
-          store.dispatch('login', {token : token});
-        }else{
-          console.log("No hay Token...");
-        }
       }
     }
   }
