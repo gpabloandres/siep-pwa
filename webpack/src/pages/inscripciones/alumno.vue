@@ -5,7 +5,7 @@
                 <v-icon slot="divider">forward</v-icon>
 
                 <v-breadcrumbs-item
-                        v-for="item in items"
+                        v-for="item in breadcrumbs"
                         :disabled="item.disabled"
                         :key="item.text"
                 >
@@ -14,96 +14,163 @@
             </v-breadcrumbs>
         </div>
 
-        <v-flex xs12 sm6 md4 lg4>
-            <v-form v-model="valid">
+        <v-flex xs12 sm6 md4 lg3>
 
-                <v-menu
-                        :close-on-content-click="false"
-                        v-model="menu_date_picker"
-                        :nudge-right="40"
-                        lazy
-                        transition="scale-transition"
-                        offset-y
-                        full-width
-                        max-width="290px"
-                        min-width="290px">
-                    <v-text-field
-                            slot="activator"
-                            v-model="computedDateFormatted"
-                            label="Fecha de Nacimiento"
-                            hint="DD/MM/YYYY"
-                            persistent-hint
-                            prepend-icon="event"
-                            readonly
-                    ></v-text-field>
-                    <v-date-picker v-model="date" no-title @input="menu_date_picker = false" :rules="dateRules" required></v-date-picker>
-                </v-menu>
+          <!--&lt;!&ndash; Vinculo &ndash;&gt;-->
+          <!--<v-combobox-->
+                  <!--v-model="alumno.vinculo"-->
+                  <!--:items="items_vinculo"-->
+                  <!--:rules="inputRules"-->
+                  <!--label="Vinculo"-->
+                  <!--required-->
+          <!--&gt;</v-combobox>-->
 
-                <v-text-field
-                        v-model="nombres"
-                        :rules="imputRules"
-                        label="Nombres"
-                        required
-                ></v-text-field>
-                <v-text-field
-                        v-model="apellidos"
-                        :rules="imputRules"
-                        label="Apellidos"
-                        required
-                ></v-text-field>
-                <v-combobox
-                        v-model="select_sexo"
-                        :items="sexos"
-                        :rules="imputRules"
-                        label="Seleccione Sexo"
-                        required
-                ></v-combobox>
-                <v-combobox
-                        v-model="select_tipo_doc"
-                        :items="tipo_doc"
-                        :rules="imputRules"
-                        label="Tipo de Documento"
-                        required
-                ></v-combobox>
-                <v-text-field
-                        v-model="nro_documento"
-                        :rules="imputRules"
-                        label="Número de Documento"
-                        required
-                ></v-text-field>
-                <v-combobox
-                        v-model="select_provincia"
-                        :items="provincias"
-                        :rules="imputRules"
-                        label="Provincia"
-                        required
-                ></v-combobox>
-                <v-combobox
-                        v-model="select_localidad"
-                        :items="localidades"
-                        :rules="imputRules"
-                        label="Localidad"
-                        required
-                ></v-combobox>
-                <v-text-field
-                        v-model="direccion"
-                        :rules="imputRules"
-                        label="Dirección"
-                        required
-                ></v-text-field>
+          <!-- Nombres -->
+          <v-text-field
+                  v-model="alumno.nombres"
+                  :rules="inputRules"
+                  label="Nombres"
+                  required
+          ></v-text-field>
 
-                <v-textarea
-                        v-model="comentarios"
-                        name="comentario_alumno"
-                        label="Comentarios (opcional)"
-                        hint="Algo que nos quiera hacer saber"
-                        color="primary"
-                        counter="100"
-                ></v-textarea>
-            </v-form>
-            <v-btn color="primary" @click="goBack"><v-icon>navigate_before</v-icon> Volver</v-btn>
-            <v-btn color="primary" @click="goForward" :disabled="!valid">Continuar <v-icon>navigate_next</v-icon></v-btn>
+          <!-- Apellidos -->
+          <v-text-field
+                  v-model="alumno.apellidos"
+                  :rules="inputRules"
+                  label="Apellidos"
+                  required
+          ></v-text-field>
+
+          <!-- Fecha de nacimiento -->
+          <v-menu
+              :close-on-content-click="false"
+              v-model="menu_date_picker"
+              :nudge-right="40"
+              lazy
+              transition="sczale-transition"
+              offset-y
+              full-width
+              max-width="290px"
+              min-width="290px">
+              <v-text-field
+                  slot="activator"
+                  v-model="computedDateFormatted"
+                  label="Fecha de Nacimiento"
+                  hint="DD/MM/YYYY"
+                  persistent-hint
+                  prepend-icon="event"
+                  readonly
+              ></v-text-field>
+              <v-date-picker v-model="alumno.fecha_nac" no-title @input="menu_date_picker = false" ></v-date-picker>
+          </v-menu>
+
+          <!-- Sexo -->
+          <v-combobox
+                v-model="alumno.sexo"
+                :items="items_sexo"
+                :rules="inputRules"
+                label="Sexo"
+                required
+          ></v-combobox>
+
+          <!-- Tipo de documento -->
+          <v-combobox
+                  v-model="alumno.documento_tipo"
+                  :items="items_tipo_doc"
+                  :rules="inputRules"
+                  label="Tipo de Documento"
+                  required
+          ></v-combobox>
+
+          <!-- Numero de documento -->
+          <v-text-field
+                  v-model="alumno.documento_nro"
+                  :rules="inputRules"
+                  label="Número de Documento"
+                  hint="Sin Puntos de separación"
+                  type="number"
+                  min="0"
+                  max="999999999"
+                  required
+          ></v-text-field>
+
+          <!-- Email -->
+          <v-text-field
+                  v-model="alumno.email"
+                  :rules="emailRules"
+                  label="E-Mail"
+                  required
+          ></v-text-field>
+
+          <!-- Telefono nro -->
+          <v-text-field
+                  v-model="alumno.telefono_nro"
+                  :rules="inputRules"
+                  label="Teléfono"
+                  required
+          ></v-text-field>
+
+          <!-- Ciudad -->
+          <v-combobox
+                  v-model="alumno.ciudad"
+                  :items="items_localidad"
+                  :rules="inputRules"
+                  label="Ciudad donde vive"
+                  required
+          ></v-combobox>
+
+          <v-subheader dark>Su domicilio actual es</v-subheader>
+
+          <!-- Calle nombre -->
+          <v-text-field
+                  v-model="alumno.calle_nombre"
+                  :rules="inputRules"
+                  label="Calle nombre"
+                  required
+          ></v-text-field>
+
+          <!-- Calle numero -->
+          <v-text-field
+                  v-model="alumno.calle_nro"
+                  :rules="inputRules"
+                  label="Calle número"
+                  required
+          ></v-text-field>
+
+          <!-- Depto casa -->
+          <v-text-field
+                  v-model="alumno.depto_casa"
+                  label="Depto / Casa (letra o número)"
+                  required
+          ></v-text-field>
+
+          <!-- Tira edificio -->
+          <v-text-field
+                  v-model="alumno.tira_edificio"
+                  label="Tira / Edificio (letra o número)"
+                  required
+          ></v-text-field>
+
+            <!-- Barrio -->
+            <v-text-field
+                    v-model="alumno.tira_edificio"
+                    label="Tira / Edificio (letra o número)"
+                    required
+            ></v-text-field>
+
+          <!-- Comentario -->
+          <v-textarea
+                  v-model="alumno.observaciones"
+                  label="Indique instituciones de preferencia"
+                  hint="Puede redactar otra observación de interés"
+                  color="primary"
+                  counter="100"
+          ></v-textarea>
+
+          <v-btn color="primary" @click="goBack"><v-icon>navigate_before</v-icon> Volver</v-btn>
+          <v-btn color="light-green lighten-1" @click="createPersona">Guardar</v-btn>
         </v-flex>
+
 
     </v-container>
 </template>
@@ -112,109 +179,79 @@
   import router from '../../router'
 
   export default {
-    created: function(){
-      store.commit('updateTitle',"Inscripciones - Nuevo Alumno");
-      store.dispatch('extractToken');
-
-    },
-    name: "alumno",
-    data: () => ({
-      date: null,
-      dateRules:[
-        v => !!v || 'Name is required',
-        v => v.length <= 10 || 'Name must be less than 10 characters'
-      ],
-      dateFormatted: null,
-      menu_date_picker: false,
-      valid: false,
-      nombres: '',
-      imputRules: [
+    name: "Alumno",
+    data: ()=>({
+      inputRules: [
         v => !!v || 'Campo Requerido',
-        v => (!v || v.length >= 3) || 'El campo debe tener más de 3 caracteres'
+      v => (!v || v.length >= 3) || 'El campo debe tener más de 3 caracteres'
       ],
-      apellidos: '',
       emailRules: [
         v => !!v || 'Campo Requerido',
-        v => /.+@.+/.test(v) || 'El E-mail debe ser valido'
+              v => /.+@.+/.test(v) || 'El E-Mail debe ser valido'
       ],
-      select_sexo:"",
-      sexos:["Femenino","Masculino"],
-      select_tipo_doc:"",
-      tipo_doc:["Documento Nacional de Identidad"],
-      nro_documento:"",
-      select_provincia:"",
-      provincias:["Tierra del Fuego"],
-      select_localidad:"",
-      localidades:["Rio Grande","Tolhuin","Ushuaia"],
-      direccion:"",
-      comentarios:"",
-      items: [
+      menu_date_picker:null,
+      items_vinculo:["Madre","Padre","Tutor"],
+      items_tipo_doc:["DNI","CI","LC","LE","Cédula Mercosur","Pasaporte extranjero","Cédula de identidad extranjera","Otro documento extranjero","No posee","En trámite"],
+      items_sexo:["Masculino","Femenino"],
+      items_localidad:["Rio Grande","Ushuaia","Tolhuin"],
+
+      alumno:{},
+      breadcrumbs: [
         {
           text: 'Paso 1',
           disabled: false
         },
         {
           text: 'Paso 2',
-          disabled: false
-        },
-        {
-          text: 'Paso3',
           disabled: true
         }
       ]
     }),
-
-    computed: {
-      alumno(){
-        return store.state.alumno
+    computed:{
+      user(){
+        return store.state.user;
       },
       computedDateFormatted () {
-        return this.formatDate(this.date)
-      },
+        return this.formatDate(this.alumno.fecha_nac)
+      }
     },
+    created: function(){
+      store.commit('updateTitle',"Alumno");
 
-    watch: {
-      date (val) {
-        // this.alumno.fecha_nac = this.formatDate(this.date);
-      },
-      comentarios(val){
-        // this.alumno.comentarios = this.comentarios
+      // Se debe setear el tipo de persona a dar de alta
+      this.alumno.email = store.state.user.authApi.email;
+
+      this.alumno.familiar = 1;
+      //this.responsable.alumno= 1;
+
+
+      // Permite la edicion de los datos del familiar
+      if(store.getters.persona) {
+        this.alumno = store.getters.persona;
       }
     },
     methods:{
-      goForward:function(){
-        this.alumno.nombres = this.nombres;
-        this.alumno.apellidos = this.apellidos;
-        this.alumno.fecha_nac = this.formatDate(this.date);
-        this.alumno.sexo = this.select_sexo;
-        this.alumno.tipo_doc = this.select_tipo_doc;
-        this.alumno.nro_doc = this.nro_documento;
-        this.alumno.provincia = this.select_provincia;
-        this.alumno.localidad = this.select_localidad;
-        this.alumno.direccion = this.direccion;
-        this.alumno.comentarios = this.comentarios;
+      createPersona:function(){
+        store.dispatch('apiCreatePersona',this.alumno);
+      },
+      updateProfile:function(){
 
-        router.push('/inscripciones/centros');
       },
       goBack:function(){
         router.go(-1);
       },
       formatDate (date) {
-        if (!date) return null
+        if (!date) return null;
 
-        const [year, month, day] = date.split('-')
+        const [year, month, day] = date.split('-');
         return `${day}/${month}/${year}`
       },
       parseDate (date) {
-        if (!date) return null
+        if (!date) return null;
 
-        const [day, month, year] = date.split('/')
-        return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
+        const [day, month, year] = date.split('/');
+        return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
       }
     }
   }
 </script>
-
-<style scoped>
-
-</style>

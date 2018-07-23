@@ -81,7 +81,7 @@
       },
       goToAdult:function(){
         this.user.isEdition = true;
-        router.push('/inscripciones/adulto_responsable')
+        router.push('/inscripciones/familiar')
       },
       goToStudent:function(){
         router.push('/inscripciones/alumno')

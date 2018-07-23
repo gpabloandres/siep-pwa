@@ -88,6 +88,9 @@
                   :rules="inputRules"
                   label="Número de Documento"
                   hint="Sin Puntos de separación"
+                  type="number"
+                  min="0"
+                  max="999999999"
                   required
           ></v-text-field>
 
@@ -99,7 +102,7 @@
                   required
           ></v-text-field>
 
-          <!-- Telefonon nro -->
+          <!-- Telefono nro -->
           <v-text-field
                   v-model="responsable.telefono_nro"
                   :rules="inputRules"
@@ -112,10 +115,11 @@
                   v-model="responsable.ciudad"
                   :items="items_localidad"
                   :rules="inputRules"
-                  label="Localidad"
+                  label="Ciudad donde vive"
                   required
           ></v-combobox>
 
+            <v-subheader dark>Su domicilio actual es</v-subheader>
           <!-- Calle nombre -->
           <v-text-field
                   v-model="responsable.calle_nombre"
@@ -146,7 +150,8 @@
                   required
           ></v-text-field>
 
-          <!-- Comentario -->
+
+            <!-- Comentario -->
           <v-textarea
                   v-model="responsable.observaciones"
                   label="Indique instituciones de preferencia"
