@@ -102,7 +102,7 @@
                 ></v-textarea>
             </v-form>
             <v-btn color="primary" @click="goBack"><v-icon>navigate_before</v-icon> Volver</v-btn>
-            <v-btn color="primary" @click="goForward">Continuar <v-icon>navigate_next</v-icon></v-btn>
+            <v-btn color="primary" @click="goForward" :disabled="!valid">Continuar <v-icon>navigate_next</v-icon></v-btn>
         </v-flex>
 
     </v-container>
