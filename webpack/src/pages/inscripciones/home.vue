@@ -73,6 +73,7 @@
   export default {
     created: function(){
       store.commit('updateTitle',"Inscripciones");
+      store.dispatch('extractToken');
     },
     data: ()=>({
       apigw: process.env.SIEP_API_GW_INGRESS,
