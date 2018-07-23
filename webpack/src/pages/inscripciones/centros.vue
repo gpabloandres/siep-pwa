@@ -13,59 +13,59 @@
                 <!--</v-breadcrumbs-item>-->
             <!--</v-breadcrumbs>-->
         <!--</div>-->
+        <v-form v-model="valid">
+            <v-flex xs12 sm6 md4 lg4>
+                <v-combobox
+                        v-model = "select_tipo"
+                        :items = "items_tipo"
+                        :rules = "imputRules"
+                        label = "Tipo Inscripción"
+                        required
+                ></v-combobox>
 
-        <v-flex xs12 sm6 md4 lg4>
-            <v-combobox
-                    v-model = "select_tipo"
-                    :items = "items_tipo"
-                    :rules = "imputRules"
-                    label = "Tipo Inscripción"
-                    required
-            ></v-combobox>
+                <v-combobox
+                        v-model="select_nivel"
+                        :items="items_niveles"
+                        :rules = "imputRules"
+                        label="Seleccione Nivel"
+                        required
+                ></v-combobox>
 
-            <v-combobox
-                    v-model="select_nivel"
-                    :items="items_niveles"
-                    :rules = "imputRules"
-                    label="Seleccione Nivel"
-                    required
-            ></v-combobox>
+                <v-combobox
+                        v-model="select_ciudad"
+                        :items="items_ciudades"
+                        :rules = "imputRules"
+                        label="Seleccione Ciudad"
+                        required
+                ></v-combobox>
 
-            <v-combobox
-                    v-model="select_ciudad"
-                    :items="items_ciudades"
-                    :rules = "imputRules"
-                    label="Seleccione Ciudad"
-                    required
-            ></v-combobox>
+                <v-combobox
+                        v-model="select_centros"
+                        :items="items_centros"
+                        :rules = "imputRules"
+                        label="Seleccione Centro"
+                        required
+                ></v-combobox>
 
-            <v-combobox
-                    v-model="select_centros"
-                    :items="items_centros"
-                    :rules = "imputRules"
-                    label="Seleccione Centro"
-                    required
-            ></v-combobox>
+                <v-combobox
+                        v-model="select_anio"
+                        :items="items_anios"
+                        :rules = "imputRules"
+                        label="Seleccione Año"
+                        required
+                ></v-combobox>
 
-            <v-combobox
-                    v-model="select_anio"
-                    :items="items_anios"
-                    :rules = "imputRules"
-                    label="Seleccione Año"
-                    required
-            ></v-combobox>
-
-            <v-textarea
-                    name ="comentario_centros"
-                    label="Comentarios"
-                    hint ="Algo que nos quiera hacer saber"
-                    color ="primary"
-                    counter ="100"
-            ></v-textarea>
-            <v-btn color="primary" @click="goBack"><v-icon>navigate_before</v-icon> Volver</v-btn>
-            <v-btn color="primary" @click="goForward">Continuar <v-icon>navigate_next</v-icon></v-btn>
-        </v-flex>
-
+                <v-textarea
+                        name ="comentario_centros"
+                        label="Comentarios"
+                        hint ="Algo que nos quiera hacer saber"
+                        color ="primary"
+                        counter ="100"
+                ></v-textarea>
+                <v-btn color="primary" @click="goBack"><v-icon>navigate_before</v-icon> Volver</v-btn>
+                <v-btn color="primary" @click="goForward" :disabled="!valid">Continuar <v-icon>navigate_next</v-icon></v-btn>
+            </v-flex>
+        </v-form>
 
     </v-container>
 </template>
@@ -82,6 +82,7 @@
       this.añosItems();
     },
     data: ()=>({
+      valid:false,
       apigw: process.env.SIEP_API_GW_INGRESS,
       imputRules: [
         v => !!v || 'Campo Requerido',
