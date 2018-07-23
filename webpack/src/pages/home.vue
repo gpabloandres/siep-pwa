@@ -83,7 +83,7 @@
         router.push('/inscripciones/adulto_responsable')
       },
       goToStudent:function(){
-        router.push('/inscripciones/alumno')
+        router.push('/inscripciones')
       }
     }
   }
