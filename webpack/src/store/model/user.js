@@ -4,22 +4,14 @@ import router from '../../router'
 
 const module = {
   state: {
-    nombres:"",
-    apellidos:"",
-    nombre_completo: "",
-    fecha_nac:"",
-    sexo:"",
-    tipo_doc:"",
-    nro_doc:"",
-    provincia:"",
-    localidad:"",
-    direccion:"",
-    telefono:"",
-    comentarios:"",
-    loggedInStatus: true,
-    authToken: '',
+    authToken: null,
     authApi: {},
     porcentaje_perfil: 0
+  },
+  getters: {
+    persona: state => {
+      return state.authApi.persona;
+    }
   },
   mutations: {
     update_nombre_completo(state,payload) {
@@ -36,45 +28,46 @@ const module = {
     },
     userProfilePercentage (state) {
       state.porcentaje_perfil = 0;
+/*
+        if(state.nombres !== ""){
+          state.porcentaje_perfil += 15;
+        }
 
-      if(state.nombres !== ""){
-        state.porcentaje_perfil += 15;
-      }
+        if(state.apellidos !==""){
+          state.porcentaje_perfil += 15;
+        }
 
-      if(state.apellidos !==""){
-        state.porcentaje_perfil += 15;
-      }
+        if(state.fecha_nac !==""){
+          state.porcentaje_perfil += 10;
+        }
 
-      if(state.fecha_nac !==""){
-        state.porcentaje_perfil += 10;
-      }
+        if(state.sexo !== ""){
+          state.porcentaje_perfil += 10;
+        }
 
-      if(state.sexo !== ""){
-        state.porcentaje_perfil += 10;
-      }
+        if(state.nro_doc !== ""){
+          state.porcentaje_perfil += 10;
+        }
 
-      if(state.nro_doc !== ""){
-        state.porcentaje_perfil += 10;
-      }
+        if(state.provincia !== ""){
+          state.porcentaje_perfil += 10;
+        }
 
-      if(state.provincia !== ""){
-        state.porcentaje_perfil += 10;
-      }
+        if(state.localidad !== ""){
+          state.porcentaje_perfil += 10;
+        }
 
-      if(state.localidad !== ""){
-        state.porcentaje_perfil += 10;
-      }
+        if(state.direccion !== ""){
+          state.porcentaje_perfil += 10;
+        }
 
-      if(state.direccion !== ""){
-        state.porcentaje_perfil += 10;
-      }
-
-      if(state.telefono !== ""){
-        state.porcentaje_perfil += 10;
-      }
+        if(state.telefono !== ""){
+          state.porcentaje_perfil += 10;
+        }
+*/
     },
     UPDATE_DATA(state,data){
-      state.nombres = data.nombres;
+     /* state.nombres = data.nombres;
       state.apellidos = data.apellidos;
       state.fecha_nac = data.fecha_nac;
       state.sexo = data.sexo;
@@ -83,7 +76,7 @@ const module = {
       state.localidad = data.localidad;
       state.direccion = data.direccion;
       state.telefono = data.telefono;
-      state.comentarios = data.comentario;
+      state.comentarios = data.comentario;*/
     }
   },
   actions: {
@@ -151,8 +144,8 @@ const module = {
         }, 9000);
       })*/
     },
-    apiPostUserData: function({commit,dispatch,state},payload) {
-      console.log('user.apiPostUserData',payload);
+    apiPostPersona: function({commit,dispatch,state},payload) {
+      console.log('user.apiPostPersona',payload);
 
       const curl = axios.create({
         baseURL: process.env.SIEP_API_GW_INGRESS
