@@ -1,14 +1,20 @@
 <template>
     <v-container fluid text-xs-center>
-        <div>
-            <v-progress-linear
-                    color = "orange darken-1"
-                    height = "10"
-                    value = "50"
-            ></v-progress-linear>
-        </div>
+        <!--<div>-->
+            <!--<v-breadcrumbs>-->
+                <!--<v-icon slot="divider">forward</v-icon>-->
 
-        <v-flex xs12>
+                <!--<v-breadcrumbs-item-->
+                        <!--v-for="item in items_breadcumbs"-->
+                        <!--:disabled="item.disabled"-->
+                        <!--:key="item.text"-->
+                <!--&gt;-->
+                    <!--{{ item.text }}-->
+                <!--</v-breadcrumbs-item>-->
+            <!--</v-breadcrumbs>-->
+        <!--</div>-->
+
+        <v-flex xs12 sm6 md4 lg4>
             <v-combobox
                     v-model = "select_tipo"
                     :items = "items_tipo"
@@ -16,9 +22,7 @@
                     label = "Tipo Inscripción"
                     required
             ></v-combobox>
-        </v-flex>
 
-        <v-flex xs12>
             <v-combobox
                     v-model="select_nivel"
                     :items="items_niveles"
@@ -26,9 +30,7 @@
                     label="Seleccione Nivel"
                     required
             ></v-combobox>
-        </v-flex>
 
-        <v-flex xs12>
             <v-combobox
                     v-model="select_ciudad"
                     :items="items_ciudades"
@@ -36,9 +38,7 @@
                     label="Seleccione Ciudad"
                     required
             ></v-combobox>
-        </v-flex>
 
-        <v-flex xs12>
             <v-combobox
                     v-model="select_centros"
                     :items="items_centros"
@@ -46,9 +46,7 @@
                     label="Seleccione Centro"
                     required
             ></v-combobox>
-        </v-flex>
 
-        <v-flex xs12>
             <v-combobox
                     v-model="select_anio"
                     :items="items_anios"
@@ -56,9 +54,7 @@
                     label="Seleccione Año"
                     required
             ></v-combobox>
-        </v-flex>
 
-        <v-flex xs12>
             <v-textarea
                     name ="comentario_centros"
                     label="Comentarios"
@@ -66,9 +62,11 @@
                     color ="primary"
                     counter ="100"
             ></v-textarea>
+            <v-btn color="primary" @click="goBack"><v-icon>navigate_before</v-icon> Volver</v-btn>
+            <v-btn color="primary" @click="goForward">Continuar <v-icon>navigate_next</v-icon></v-btn>
         </v-flex>
-        <v-btn color="primary" @click="goBack"><v-icon>navigate_before</v-icon> Volver</v-btn>
-        <v-btn color="primary" @click="goForward">Continuar <v-icon>navigate_next</v-icon></v-btn>
+
+
     </v-container>
 </template>
 
@@ -98,7 +96,21 @@
       select_ciudad:"",
       items_ciudades:["Ushuaia","Tolhuin","Rio Grande"],
       select_anio:"",
-      items_anios:[]
+      items_anios:[],
+      items_breadcumbs: [
+        {
+          text: 'Paso 1',
+          disabled: false
+        },
+        {
+          text: 'Paso 2',
+          disabled: false
+        },
+        {
+          text: 'Pasoss3',
+          disabled: false
+        }
+      ]
     }),
     computed:{
       centros(){
@@ -111,7 +123,7 @@
     name: "centros",
     methods:{
       goForward:function(){
-        router.push('/inscripciones/adulto_responsable');
+        router.push('/inscripciones/finalizar');
       },
       goBack:function(){
         router.go(-1);

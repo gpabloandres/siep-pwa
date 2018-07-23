@@ -13,8 +13,9 @@
                 </v-breadcrumbs-item>
             </v-breadcrumbs>
         </div>
-
-        <v-combobox
+       
+        <v-flex xs12 sm6 md4 lg3>
+ <v-combobox
                 v-model="responsable.vinculo"
                 :items="items_vinculo"
                 :rules="inputRules"
@@ -36,8 +37,7 @@
                 required
         ></v-text-field>
 
-        <v-flex xs12 lg6>
-            <v-menu
+  <v-menu
                     :close-on-content-click="false"
                     v-model="menu_date_picker"
                     :nudge-right="40"
@@ -51,16 +51,15 @@
                         slot="activator"
                         v-model="computedDateFormatted"
                         label="Fecha de Nacimiento"
-                        hint="MM/DD/YYYY"
+                        hint="DD/MM/YYYY"
                         persistent-hint
                         prepend-icon="event"
                         readonly
                 ></v-text-field>
                 <v-date-picker v-model="responsable.fecha_nac" no-title @input="menu_date_picker = false" ></v-date-picker>
             </v-menu>
-        </v-flex>
 
-        <v-combobox
+<v-combobox
                 v-model="responsable.sexo"
                 :items="items_sexo"
                 :rules="inputRules"
@@ -121,17 +120,18 @@
                 required
         ></v-text-field>
 
-        <v-flex xs12>
-            <v-textarea
+<v-textarea
                     v-model="responsable.comentario"
                     label="Comentarios"
                     hint="Algo que nos quiera hacer saber"
                     color="primary"
                     counter="100"
             ></v-textarea>
+            <v-btn color="primary" @click="goBack"><v-icon>navigate_before</v-icon> Volver</v-btn>
+            <v-btn color="light-green lighten-1" @click="sendRequest">Guardar</v-btn>
         </v-flex>
-        <v-btn color="primary" @click="goBack"><v-icon>navigate_before</v-icon> Volver</v-btn>
-        <v-btn color="light-green lighten-1" @click="sendRequest">Guardar</v-btn>
+
+
     </v-container>
 </template>
 
@@ -189,12 +189,12 @@
         if (!date) return null;
 
         const [year, month, day] = date.split('-');
-        return `${month}/${day}/${year}`
+        return `${day}/${month}/${year}`
       },
       parseDate (date) {
         if (!date) return null;
 
-        const [month, day, year] = date.split('/');
+        const [day, month, year] = date.split('/');
         return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
       }
     },

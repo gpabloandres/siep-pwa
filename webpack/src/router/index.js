@@ -8,6 +8,7 @@ import inscripciones_home from '@/pages/inscripciones/home'
 import alumno from '@/pages/inscripciones/alumno'
 import centros from '@/pages/inscripciones/centros'
 import adulto_responsable from '@/pages/inscripciones/adulto_responsable'
+import finalizar from '@/pages/inscripciones/finalizar'
 
 Vue.use(Router);
 
@@ -42,6 +43,11 @@ export default new Router({
       path: '/inscripciones/adulto_responsable',
       name: 'inscripciones.adulto_responsable',
       component: adulto_responsable
+    },
+    {
+      path: '/inscripciones/finalizar',
+      name: 'inscripciones.finalizar',
+      component: finalizar
     }
   ]
 })
