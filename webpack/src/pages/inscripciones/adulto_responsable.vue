@@ -5,7 +5,7 @@
                 <v-icon slot="divider">forward</v-icon>
 
                 <v-breadcrumbs-item
-                        v-for="item in items"
+                        v-for="item in breadcrumbs"
                         :disabled="item.disabled"
                         :key="item.text"
                 >
@@ -15,23 +15,23 @@
         </div>
 
         <v-combobox
-                v-model="datos.select_vinculo"
+                v-model="responsable.vinculo"
                 :items="items_vinculo"
-                :rules="imputRules"
+                :rules="inputRules"
                 label="Vinculo"
                 required
         ></v-combobox>
 
         <v-text-field
-                v-model="datos.nombres"
-                :rules="imputRules"
+                v-model="responsable.nombres"
+                :rules="inputRules"
                 label="Nombres"
                 required
         ></v-text-field>
 
         <v-text-field
-                v-model="datos.apellidos"
-                :rules="imputRules"
+                v-model="responsable.apellidos"
+                :rules="inputRules"
                 label="Apellidos"
                 required
         ></v-text-field>
@@ -39,7 +39,7 @@
         <v-flex xs12 lg6>
             <v-menu
                     :close-on-content-click="false"
-                    v-model="datos.menu_date_picker"
+                    v-model="menu_date_picker"
                     :nudge-right="40"
                     lazy
                     transition="sczale-transition"
@@ -56,81 +56,74 @@
                         prepend-icon="event"
                         readonly
                 ></v-text-field>
-                <v-date-picker v-model="datos.fecha_nac" no-title @input="datos.menu_date_picker = false" ></v-date-picker>
+                <v-date-picker v-model="responsable.fecha_nac" no-title @input="menu_date_picker = false" ></v-date-picker>
             </v-menu>
         </v-flex>
 
         <v-combobox
-                v-model="datos.sexo"
+                v-model="responsable.sexo"
                 :items="items_sexo"
-                :rules="imputRules"
+                :rules="inputRules"
                 label="Sexo"
                 required
         ></v-combobox>
 
         <v-combobox
-                v-model="datos.select_tipo_doc"
+                v-model="responsable.documento_tipo"
                 :items="items_tipo_doc"
-                :rules="imputRules"
+                :rules="inputRules"
                 label="Tipo de Documento"
                 required
         ></v-combobox>
 
         <v-text-field
-                v-model="datos.nro_documento"
-                :rules="imputRules"
+                v-model="responsable.documento_nro"
+                :rules="inputRules"
                 label="Número de Documento"
                 hint="Sin Puntos de separación"
                 required
         ></v-text-field>
 
         <v-text-field
-                v-model="datos.email"
+                v-model="responsable.email"
                 :rules="emailRules"
                 label="E-Mail"
                 required
         ></v-text-field>
 
         <v-text-field
-                v-model="datos.telefono"
-                :rules="imputRules"
+                v-model="responsable.telefono_nro"
+                :rules="inputRules"
                 label="Teléfono"
                 required
         ></v-text-field>
 
-        <v-text-field
-                v-model="datos.telefono_alternativo"
-                :rules="imputRules"
-                label="Teléfono Alternativo"
-                required
-        ></v-text-field>
-
         <v-combobox
-                v-model="datos.provincia"
+                v-model="responsable.provincia"
                 :items="items_provincia"
-                :rules="imputRules"
+                :rules="inputRules"
                 label="Provincia"
                 required
         ></v-combobox>
 
         <v-combobox
-                v-model="datos.localidad"
+                v-model="responsable.ciudad"
                 :items="items_localidad"
-                :rules="imputRules"
+                :rules="inputRules"
                 label="Localidad"
                 required
         ></v-combobox>
 
         <v-text-field
-                v-model="datos.direccion"
-                :rules="imputRules"
+                v-model="responsable.direccion"
+                :rules="inputRules"
                 label="Dirección"
                 required
         ></v-text-field>
 
         <v-flex xs12>
             <v-textarea
-                    v-model="datos.comentario"
+                    v-model="responsable.comentario"
                     label="Comentarios"
                     hint="Algo que nos quiera hacer saber"
                     color="primary"
@@ -146,13 +139,12 @@
   import router from '../../router'
 
   export default {
+    name: "adulto_responsable",
     created: function(){
       store.commit('updateTitle',"Inscripciones - Responsable");
-      this.datos = this.user;
     },
-    name: "adulto_responsable",
     data: ()=>({
-      imputRules: [
+      inputRules: [
         v => !!v || 'Campo Requerido',
         v => (!v || v.length >= 3) || 'El campo debe tener más de 3 caracteres'
       ],
@@ -160,15 +152,15 @@
         v => !!v || 'Campo Requerido',
         v => /.+@.+/.test(v) || 'El E-Mail debe ser valido'
       ],
-      select_vinculo:"",
+      menu_date_picker:null,
       items_vinculo:["Madre","Padre","Tutor"],
-      select_tipo_doc:"",
       items_tipo_doc:["DNI"],
       items_sexo:["Masculino","Femenino"],
       items_provincia:["Tierra del Fuego"],
       items_localidad:["Rio Grande","Ushuaia","Tolhuin"],
-      datos:[],
-      items: [
+
+      responsable:{},
+      breadcrumbs: [
         {
           text: 'Paso 1',
           disabled: false
@@ -182,13 +174,12 @@
           disabled: true
         }
       ]
-
-
     }),
     methods:{
       sendRequest:function(){
-        store.commit('UPDATE_DATA',this.datos);
-        router.go(-1);
+        //store.commit('UPDATE_DATA',this.responsable);
+        //router.go(-1);
+        store.dispatch('apiPostUserData',this.responsable);
 
       },
       goBack:function(){
@@ -212,12 +203,8 @@
         return store.state.user;
       },
       computedDateFormatted () {
-        return this.formatDate(this.datos.fecha_nac)
+        return this.formatDate(this.responsable.fecha_nac)
       }
     }
   }
 </script>
-
-<style scoped>
-
-</style>
