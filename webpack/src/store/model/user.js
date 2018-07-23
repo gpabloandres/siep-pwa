@@ -7,7 +7,7 @@ const module = {
     authToken: null,
     authApi: {},
     apiGetUserDataRunning: false,
-    porcentaje_perfil: 0
+    loggedIn: false,
   },
   getters: {
     persona: state => {
@@ -26,58 +26,6 @@ const module = {
     },
     removeWebToken: function(state){
       state.authToken = '';
-    },
-    userProfilePercentage (state) {
-      state.porcentaje_perfil = 0;
-/*
-        if(state.nombres !== ""){
-          state.porcentaje_perfil += 15;
-        }
-
-        if(state.apellidos !==""){
-          state.porcentaje_perfil += 15;
-        }
-
-        if(state.fecha_nac !==""){
-          state.porcentaje_perfil += 10;
-        }
-
-        if(state.sexo !== ""){
-          state.porcentaje_perfil += 10;
-        }
-
-        if(state.nro_doc !== ""){
-          state.porcentaje_perfil += 10;
-        }
-
-        if(state.provincia !== ""){
-          state.porcentaje_perfil += 10;
-        }
-
-        if(state.localidad !== ""){
-          state.porcentaje_perfil += 10;
-        }
-
-        if(state.direccion !== ""){
-          state.porcentaje_perfil += 10;
-        }
-
-        if(state.telefono !== ""){
-          state.porcentaje_perfil += 10;
-        }
-*/
-    },
-    UPDATE_DATA(state,data){
-     /* state.nombres = data.nombres;
-      state.apellidos = data.apellidos;
-      state.fecha_nac = data.fecha_nac;
-      state.sexo = data.sexo;
-      state.nro_doc = data.nro_documento;
-      state.provincia = data.provincia;
-      state.localidad = data.localidad;
-      state.direccion = data.direccion;
-      state.telefono = data.telefono;
-      state.comentarios = data.comentario;*/
     }
   },
   actions: {
@@ -99,13 +47,15 @@ const module = {
     // Usuario autenticado con exito, retorna datos de usuario desde api
     loginSuccess: function({state}){
       console.log('user.loginSuccess()',state);
+      state.loggedIn = true;
       router.push({
         path: '/home'
       });
     },
     // No existe token
-    tokenMissing: function(context, data){
+    tokenMissing: function({state}){
       console.log('User not logged in, token missing');
+      state.loggedIn = false;
       router.push({
         path: '/'
       });
@@ -113,13 +63,14 @@ const module = {
     // Eliminar token del modelo
     logout: function(context){
       context.commit('removeWebToken');
+      state.loggedIn = true;
       router.push({
         path: '/home'
       });
     },
     apiGetUserData: function({commit,dispatch,state}) {
       if(!this.apiGetUserDataRunning) {
-        this.apiGetUserDataRunning = true;
+        state.apiGetUserDataRunning = true;
 
         const curl = axios.create({
           baseURL: process.env.SIEP_API_GW_INGRESS
@@ -133,14 +84,14 @@ const module = {
               commit('updateAuthApi',response.data);
               dispatch('loginSuccess');
 
-              this.apiGetUserDataRunning = false;
+              state.apiGetUserDataRunning = false;
             })
             .catch(function (error) {
               // handle error
               console.log(error.response.data);
               dispatch('tokenMissing');
 
-              this.apiGetUserDataRunning = false;
+              state.apiGetUserDataRunning = false;
             });
       }
 
@@ -151,8 +102,8 @@ const module = {
         }, 9000);
       })*/
     },
-    apiPostPersona: function({commit,dispatch,state},payload) {
-      console.log('user.apiPostPersona',payload);
+    apiCreatePersona: function({commit,dispatch,state},payload) {
+      console.log('user.apiCreatePersona',payload);
 
       const curl = axios.create({
         baseURL: process.env.SIEP_API_GW_INGRESS
@@ -163,8 +114,12 @@ const module = {
       curl.post('/api/personas',payload)
       .then(function (response) {
         // handle success
-        //commit('updateAuthApi',response.data);
-        console.log(response.data)
+        if(response.data.persona.id)
+        {
+          dispatch('apiGetUserData');
+        } else {
+          console.log(response.data);
+        }
       })
       .catch(function (error) {
         // handle error

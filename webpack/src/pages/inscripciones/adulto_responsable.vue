@@ -180,10 +180,7 @@
     }),
     methods:{
       sendRequest:function(){
-        //store.commit('UPDATE_DATA',this.responsable);
-        //router.go(-1);
-        store.dispatch('apiPostPersona',this.responsable);
-
+        store.dispatch('apiCreatePersona',this.responsable);
       },
       goBack:function(){
         router.go(-1);
