@@ -13,7 +13,7 @@
                 </v-breadcrumbs-item>
             </v-breadcrumbs>
         </div>
-       
+
         <v-flex xs12 sm6 md4 lg3>
  <v-combobox
                 v-model="responsable.vinculo"
@@ -142,6 +142,9 @@
     name: "adulto_responsable",
     created: function(){
       store.commit('updateTitle',"Inscripciones - Responsable");
+      if(store.getters.persona) {
+        this.responsable = store.getters.persona;
+      }
     },
     data: ()=>({
       inputRules: [
@@ -179,7 +182,7 @@
       sendRequest:function(){
         //store.commit('UPDATE_DATA',this.responsable);
         //router.go(-1);
-        store.dispatch('apiPostUserData',this.responsable);
+        store.dispatch('apiPostPersona',this.responsable);
 
       },
       goBack:function(){
