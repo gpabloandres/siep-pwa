@@ -6,6 +6,7 @@ const module = {
   state: {
     authToken: null,
     authApi: {},
+    apiGetUserDataRunning: false,
     porcentaje_perfil: 0
   },
   getters: {
@@ -94,9 +95,6 @@ const module = {
     login: function(context, data){
       context.commit('addWebToken', data.token);
       context.dispatch('apiGetUserData');
-      router.push({
-        path: '/home'
-      });
     },
     // Usuario autenticado con exito, retorna datos de usuario desde api
     loginSuccess: function({state}){
@@ -120,23 +118,32 @@ const module = {
       });
     },
     apiGetUserData: function({commit,dispatch,state}) {
-      const curl = axios.create({
-        baseURL: process.env.SIEP_API_GW_INGRESS
-      });
-      // En todas las request envia el token por header
-      curl.defaults.headers.common['Authorization'] = `Bearer ${state.authToken}`;
+      if(!this.apiGetUserDataRunning) {
+        this.apiGetUserDataRunning = true;
 
-      curl.get('/auth/social/me')
-      .then(function (response) {
-        // handle success
-        commit('updateAuthApi',response.data);
-        dispatch('loginSuccess');
-      })
-      .catch(function (error) {
-        // handle error
-        console.log('User not logged in, token missing');
-        console.log(error.response.data);
-      });
+        const curl = axios.create({
+          baseURL: process.env.SIEP_API_GW_INGRESS
+        });
+        // En todas las request envia el token por header
+        curl.defaults.headers.common['Authorization'] = `Bearer ${state.authToken}`;
+
+        curl.get('/auth/social/me')
+            .then(function (response) {
+              // handle success
+              commit('updateAuthApi',response.data);
+              dispatch('loginSuccess');
+
+              this.apiGetUserDataRunning = false;
+            })
+            .catch(function (error) {
+              // handle error
+              console.log(error.response.data);
+              dispatch('tokenMissing');
+
+              this.apiGetUserDataRunning = false;
+            });
+      }
+
       /*return new Promise((resolve, reject) => {
           setTimeout(() => {
           console.log('DONE get UserData');
