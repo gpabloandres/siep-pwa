@@ -222,6 +222,9 @@
       createPersona:function(){
         store.dispatch('apiCreatePersona',this.responsable);
       },
+      updateProfile:function(){
+
+      },
       goBack:function(){
         router.go(-1);
       },

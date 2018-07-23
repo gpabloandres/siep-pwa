@@ -114,6 +114,8 @@
   export default {
     created: function(){
       store.commit('updateTitle',"Inscripciones - Nuevo Alumno");
+      store.dispatch('extractToken');
+
     },
     name: "alumno",
     data: () => ({
