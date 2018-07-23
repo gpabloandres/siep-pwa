@@ -100,7 +100,7 @@ const module = {
     // Guarda el token en el modelo
     login: function(context, data){
       context.commit('addWebToken', data.token);
-      context.dispatch('getUserData');
+      context.dispatch('apiGetUserData');
       router.push({
         path: '/home'
       });
@@ -126,8 +126,7 @@ const module = {
         path: '/home'
       });
     },
-    // No existe token
-    getUserData: function({commit,dispatch,state}) {
+    apiGetUserData: function({commit,dispatch,state}) {
       const curl = axios.create({
         baseURL: process.env.SIEP_API_GW_INGRESS
       });
@@ -142,15 +141,35 @@ const module = {
       })
       .catch(function (error) {
         // handle error
+        console.log('User not logged in, token missing');
         console.log(error.response.data);
       });
-
       /*return new Promise((resolve, reject) => {
           setTimeout(() => {
           console.log('DONE get UserData');
           resolve()
         }, 9000);
       })*/
+    },
+    apiPostUserData: function({commit,dispatch,state},payload) {
+      console.log('user.apiPostUserData',payload);
+
+      const curl = axios.create({
+        baseURL: process.env.SIEP_API_GW_INGRESS
+      });
+      // Header con token
+      curl.defaults.headers.common['Authorization'] = `Bearer ${state.authToken}`;
+
+      curl.post('/api/personas',payload)
+      .then(function (response) {
+        // handle success
+        //commit('updateAuthApi',response.data);
+        console.log(response.data)
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error.response.data);
+      });
     }
   }
 };
