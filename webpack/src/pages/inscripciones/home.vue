@@ -5,7 +5,7 @@
                 <v-icon slot="divider">forward</v-icon>
 
                 <v-breadcrumbs-item
-                        v-for="item in items"
+                        v-for="item in breadcrumbs"
                         :disabled="item.disabled"
                         :key="item.text"
                 >
@@ -14,31 +14,30 @@
             </v-breadcrumbs>
         </div>
 
-        <v-flex xs12 sm6 md4 lg4>
-            <p>Para comenzar, busque un Alumno en el campo de busqueda, o si lo desea, agregue un Nuevo Alumno</p>
+      Puede registrar a un nuevo alumno
+      <v-btn color="primary" @click="goNewStudent"><v-icon left>person_add</v-icon>Nuevo Alumno</v-btn>
 
-            <v-divider></v-divider>
-            <v-container  xs12 sm6 md4 lg3>
-                <v-btn color="primary" @click="goNewStudent"><v-icon left>person_add</v-icon>Nuevo Alumno</v-btn>
-            </v-container>
+      <v-divider />
 
-
-            <v-divider></v-divider>
-
-            <v-text-field
-                    v-model="buscar_alumno"
-                    label="Busque por Nombre o DNI"
+      En caso de que el alumno ya pertenezca a una institucion, puede buscarlo en el sistema con su numero de documento
+      <v-text-field
+                    v-model="documento_nro"
+                    label="Numero de documento del alumno"
             ></v-text-field>
+            <v-btn color="primary" @click="startFindPersona" :loading="findPersonaRunning"><v-icon left>search</v-icon>Buscar</v-btn>
 
-            <v-container grid-list-md>
+
+          <v-container grid-list-md>
                 <v-data-iterator
                         :items="resultado"
                         content-tag="v-layout"
                         hide-actions
                         row
-                        wrap>
+                        wrap
+                        no-data-text=""
+                >
 
-                    <v-flex
+                    <v-flex xs12
                             slot="item"
                             slot-scope="props"
                     >
@@ -50,7 +49,7 @@
                             <v-list dense>
                                 <v-list-tile>
                                     <v-list-tile-content>DNI:</v-list-tile-content>
-                                    <v-list-tile-content class="align-left"><strong>{{ props.item.dni }}</strong></v-list-tile-content>
+                                    <v-list-tile-content class="align-left"><strong>{{ props.item.documento_nro }}</strong></v-list-tile-content>
                                 </v-list-tile>
                             </v-list>
                         </v-card>
@@ -59,10 +58,6 @@
                 </v-data-iterator>
             </v-container>
 
-            <v-divider></v-divider>
-
-            <!--<v-btn color="primary" @click="goForward">Continuar <v-icon>navigate_next</v-icon></v-btn>-->
-        </v-flex>
 
     </v-container>
 </template>
@@ -70,50 +65,55 @@
 <script>
   import router from '../../router'
   import axios from 'axios'
+
   export default {
-    created: function(){
-      store.commit('updateTitle',"Inscripciones");
-      store.dispatch('extractToken');
-    },
     data: ()=>({
       apigw: process.env.SIEP_API_GW_INGRESS,
-      buscar_alumno:"",
-      resultado:[
-        {
-          id:1,
-          nombres: "Montoto Esteban",
-          apellidos: "Pérez Gómez",
-          dni: "99.999.999"
-        },
-        {
-          id:2,
-          nombres: "Miguel Angel",
-          apellidos: "Gonzáles",
-          dni:"88.888.888"
-        }
-      ],
-      items: [
+      documento_nro:"",
+      findPersonaRunning: false,
+      resultado:[],
+
+      breadcrumbs: [
         {
           text: 'Paso 1',
-          disabled: false
+          disabled: true
         },
         {
           text: 'Paso 2',
           disabled: false
-        },
-        {
-          text: 'Paso3',
-          disabled: true
         }
       ]
     }),
+    created: function(){
+      store.commit('updateTitle',"Inscripciones");
+    },
     computed:{
       alumno(){
         return store.state.alumno
       }
     },
-    name: "inscripciones_home",
     methods:{
+      startFindPersona:function(){
+        let vm = this;
+        vm.findPersonaRunning = true;
+        vm.resultado = [];
+        
+        store.dispatch('apiFindPersona',{
+          documento_nro:this.documento_nro,
+          alumno:1
+        })
+          .then(function (response) {
+            // handle success
+            vm.resultado = response.data.persona;
+            vm.findPersonaRunning = false;
+        })
+          .catch(function (error) {
+            // handle error
+            vm.resultado = [];
+            console.log(error.response.data);
+            vm.findPersonaRunning = false;
+          });
+      },
       goNewStudent:function(){
         router.push('/inscripciones/alumno');
       },
@@ -127,7 +127,6 @@
     }
   }
 </script>
-
 
 <style scoped>
 </style>

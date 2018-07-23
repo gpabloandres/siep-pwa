@@ -103,6 +103,19 @@ const module = {
         }, 9000);
       })*/
     },
+    apiFindPersona: function({commit,dispatch,state},payload) {
+      console.log('user.apiFindPersona',payload);
+
+      const curl = axios.create({
+        baseURL: process.env.SIEP_API_GW_INGRESS
+      });
+      // Header con token
+      curl.defaults.headers.common['Authorization'] = `Bearer ${state.authToken}`;
+
+      return curl.get('/api/personas',{
+        params: payload
+      });
+    },
     apiCreatePersona: function({commit,dispatch,state},payload) {
       console.log('user.apiCreatePersona',payload);
 
@@ -113,19 +126,19 @@ const module = {
       curl.defaults.headers.common['Authorization'] = `Bearer ${state.authToken}`;
 
       curl.post('/api/personas',payload)
-      .then(function (response) {
-        // handle success
-        if(response.data.persona.id)
-        {
-          dispatch('apiGetUserData');
-        } else {
-          console.log(response.data);
-        }
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error.response.data);
-      });
+          .then(function (response) {
+            // handle success
+            if(response.data.persona.id)
+            {
+              dispatch('apiGetUserData');
+            } else {
+              console.log(response.data);
+            }
+          })
+          .catch(function (error) {
+            // handle error
+            console.log(error.response.data);
+          });
     }
   }
 };

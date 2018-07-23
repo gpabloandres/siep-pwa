@@ -84,7 +84,7 @@
         router.push('/inscripciones/familiar')
       },
       goToStudent:function(){
-        router.push('/inscripciones/alumno')
+        router.push('/inscripciones')
       }
     }
   }
