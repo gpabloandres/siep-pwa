@@ -7,7 +7,8 @@ const module = {
     authToken: null,
     authApi: {},
     apiGetUserDataRunning: false,
-    loggedIn: false,
+    porcentaje_perfil: 0,
+    isEdition: false
   },
   getters: {
     persona: state => {
@@ -88,7 +89,7 @@ const module = {
             })
             .catch(function (error) {
               // handle error
-              console.log(error.response.data);
+              console.log(error);
               dispatch('tokenMissing');
 
               state.apiGetUserDataRunning = false;

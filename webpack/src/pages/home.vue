@@ -80,7 +80,8 @@
         router.push('/')
       },
       goToAdult:function(){
-        router.push('/inscripciones/adulto_responsable')
+        this.user.isEdition = true;
+        router.push('/inscripciones/familiar')
       },
       goToStudent:function(){
         router.push('/inscripciones')

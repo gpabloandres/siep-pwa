@@ -9,7 +9,7 @@ import menu_toolbar from './model/menu_toolbar'
 import inscripciones_home from './model/inscripciones/home'
 import alumno from './model/inscripciones/alumno'
 import centros from './model/inscripciones/centros'
-import adulto_responsable from './model/inscripciones/adulto_responsable'
+import familiar from './model/inscripciones/familiar'
 
 Vue.use(Vuex);
 
@@ -21,7 +21,7 @@ const store = new Vuex.Store({
     home: inscripciones_home,
     alumno: alumno,
     centros: centros,
-    adulto_responsable: adulto_responsable
+    familiar: familiar
   }
 })
 
