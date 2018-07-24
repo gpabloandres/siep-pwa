@@ -10,8 +10,8 @@
                 <v-divider></v-divider>
 
                 <div class="text-xs-center">
-                    <v-btn round color="indigo darken-3" dark small @click="goTo('facebook')"><FacebookIcon style="font-size:15px"/></v-btn>
-                    <v-btn round color="red darken-1" dark small @click="goTo('google')"><GoogleIcon style="font-size:15px"/></v-btn>
+                    <v-btn round color="indigo darken-3" dark @click="goTo('facebook')">Ingresar con facebook</v-btn>
+                    <v-btn round color="red darken-1" dark @click="goTo('google')">Ingresar con Google</v-btn>
                 </div>
 
 
