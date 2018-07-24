@@ -202,6 +202,7 @@
         if(this.mode=='update'){
           if(store.getters.persona) {
             this.form = store.getters.persona;
+            this.form.ciudad= this.form.ciudad.nombre;
           }
         }
       }

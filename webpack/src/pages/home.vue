@@ -37,13 +37,23 @@
                 <v-divider class="my-3"></v-divider>
 
                 <v-flex>
-                  <v-btn class="mx-0" color="success" large @click="goToAdult">
+                  <v-btn class="mx-0" color="success" large @click="goToFamiliar('create')">
                     <v-icon left>how_to_reg</v-icon>Completar perfil
                   </v-btn>
                 </v-flex>
               </div>
               <!-- EN CASO DE QUE LA PERSONA ESTE DEFINIDA -->
               <div v-else>
+
+                <!-- EDICION DE PERSONA -->
+                <!--
+                <v-flex>
+                  <v-btn class="mx-0" color="orange" dark large @click="goToFamiliar('update')">
+                    <v-icon left>edit</v-icon>Editar  mi perfil
+                  </v-btn>
+                </v-flex>
+                -->
+
                 <v-flex>
                   <v-btn class="mx-0" color="primary" large @click="goToStudent">
                     <v-icon left>how_to_reg</v-icon>Registrar Alumno
@@ -79,9 +89,8 @@
       goToLogin:function(){
         router.push('/')
       },
-      goToAdult:function(){
-        this.user.isEdition = true;
-        router.push('/inscripciones/familiar')
+      goToFamiliar:function(mode){
+        router.push(`/inscripciones/familiar/${mode}`)
       },
       goToStudent:function(){
         router.push('/inscripciones')

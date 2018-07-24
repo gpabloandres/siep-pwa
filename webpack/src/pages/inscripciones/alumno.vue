@@ -40,7 +40,7 @@
 
   },
   created: function(){
-    store.commit('updateTitle',"Alumno");
+
   },
   methods:{
 
