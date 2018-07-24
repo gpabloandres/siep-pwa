@@ -6,6 +6,7 @@
                 <v-combobox
                         v-model="comboboxes.ciudad"
                         :items="resultado.ciudades"
+                        :loading="loading_ciudad"
                         label="Seleccione Ciudad"
                         required
                 ></v-combobox>
@@ -14,6 +15,7 @@
                 <v-combobox
                         v-model="comboboxes.nivel"
                         :items="resultado.niveles"
+                        :loading="loading_nivel"
                         label="Seleccione Nivel"
                         required
                 ></v-combobox>
@@ -31,9 +33,8 @@
                             color="primary"
                             @click="findInstitution"
                             :loading="searching"
-                            large
                     >
-                        <v-icon left>search</v-icon>Buscar
+                        <v-icon left :disabled="!valid">search</v-icon>Buscar
 
                     </v-btn>
                 </v-container>
@@ -52,9 +53,9 @@
                                 slot="item"
                                 slot-scope="props"
                                 xs12
-                                sm6
-                                md4
-                                lg3
+                                sm12
+                                md12
+                                lg12
                         >
                             <v-card>
                                 <v-divider></v-divider>
@@ -93,8 +94,8 @@
       error:"",
       valid:false,
       searching:false,
-      loading_nivel:false,
-      loading_ciudad:false,
+      loading_nivel:true,
+      loading_ciudad:true,
       headers:['Nombre'],
       apigw: process.env.SIEP_API_GW_INGRESS,
       combo_sector:["ESTATAL","PRIVADO"],
@@ -130,7 +131,7 @@
       },
       findInstitution: function () {
         var vm = this;
-        vm.searching = true;
+        this.searching = true;
         axios.get(vm.apigw+'/api/forms/centros?ciudad='+vm.comboboxes.ciudad+'&sector='+vm.comboboxes.sector+'&nivel_servicio='+vm.comboboxes.nivel)
           .then(function (response) {
             let render = response.data.map(function(x) {
@@ -138,16 +139,17 @@
             });
 
             vm.resultado.centros = render;
+            vm.searching = false;
           })
           .catch(function (error) {
             vm.error = error.message;
             console.log(vm.error);
+            vm.searching = false;
           });
-        vm.searching = false;
+
       },
       nivelItems: function () {
         var vm = this;
-        vm.loading_nivel = true;
         axios.get(vm.apigw+'/api/forms/niveles')
           .then(function (response) {
             let render = response.data.map(function(x) {
@@ -155,19 +157,20 @@
             });
 
             vm.resultado.niveles = render;
+            vm.loading_nivel = false;
 
           })
           .catch(function (error) {
             vm.error = error.message;
+            vm.loading_nivel = false;
             console.log(vm.error);
 
           });
-        vm.loading_nivel = false;
+
 
       },
       ciudadesItems: function () {
         var vm = this;
-        vm.loading_ciudad = true;
         axios.get(vm.apigw+'/api/forms/ciudades')
           .then(function (response) {
             let render = response.data.map(function(x) {
@@ -175,12 +178,14 @@
             });
 
             vm.resultado.ciudades = render;
+            vm.loading_ciudad = false;
           })
           .catch(function (error) {
             vm.error = error.message;
             console.log(vm.error);
+            vm.loading_ciudad = false;
           });
-        vm.loading_ciudad = false;
+
       }
     }
   }
