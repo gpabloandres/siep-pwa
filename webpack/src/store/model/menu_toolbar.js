@@ -2,7 +2,7 @@
 
 const module = {
   state: {
-    title: "Siep"
+    title: "SIEP"
   },
   mutations: {
     updateTitle(state,payload) {

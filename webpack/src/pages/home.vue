@@ -75,7 +75,7 @@
 
   export default{
     created: function(){
-      store.commit('updateTitle',"Siep");
+      store.commit('updateTitle',"SIEP | PRE-INSCRIPCIONES 2019");
     },
     computed:{
       user(){
