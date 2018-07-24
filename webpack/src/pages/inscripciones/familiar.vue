@@ -119,7 +119,7 @@
                   required
           ></v-combobox>
 
-            <v-subheader dark>Su domicilio actual es</v-subheader>
+            <v-subheader light>Su domicilio actual es</v-subheader>
           <!-- Calle nombre -->
           <v-text-field
                   v-model="responsable.calle_nombre"
@@ -150,12 +150,35 @@
                   required
           ></v-text-field>
 
+            <!-- Ciudad -->
+            <div v-if="user.authApi.persona_id !== 0">
+                <v-combobox
+                        v-model="responsable.ciudad.nombre"
+                        :items="items_localidad"
+                        :rules="inputRules"
+                        label="Ciudad donde vive"
+                        required
+                ></v-combobox>
+            </div>
+            <div v-else="">
+                <!-- Ciudad -->
+                <v-combobox
+                            v-model="responsable.ciudad"
+                            :items="items_localidad"
+                            :rules="inputRules"
+                            label="Ciudad donde vive"
+                            required
+                ></v-combobox>
+            </div>
+
+
+
 
             <!-- Comentario -->
           <v-textarea
                   v-model="responsable.observaciones"
-                  label="Indique instituciones de preferencia"
-                  hint="Puede redactar otra observación de interés"
+                  label="Observaciones"
+                  hint="Algo que nos quiera hacer saber"
                   color="primary"
                   counter="100"
           ></v-textarea>
@@ -215,8 +238,6 @@
       this.responsable.email = store.state.user.authApi.email;
 
       this.responsable.familiar = 1;
-      //this.responsable.alumno= 1;
-
 
       // Permite la edicion de los datos del familiar
       if(store.getters.persona) {

@@ -16,15 +16,6 @@
 
         <v-flex xs12 sm6 md4 lg3>
 
-          <!--&lt;!&ndash; Vinculo &ndash;&gt;-->
-          <!--<v-combobox-->
-                  <!--v-model="alumno.vinculo"-->
-                  <!--:items="items_vinculo"-->
-                  <!--:rules="inputRules"-->
-                  <!--label="Vinculo"-->
-                  <!--required-->
-          <!--&gt;</v-combobox>-->
-
           <!-- Nombres -->
           <v-text-field
                   v-model="alumno.nombres"
@@ -110,16 +101,18 @@
                   required
           ></v-text-field>
 
-          <!-- Ciudad -->
-          <v-combobox
-                  v-model="alumno.ciudad"
-                  :items="items_localidad"
-                  :rules="inputRules"
-                  label="Ciudad donde vive"
-                  required
-          ></v-combobox>
+            <!-- Ciudad -->
+            <v-combobox
+                        v-model="alumno.ciudad"
+                        :items="items_localidad"
+                        :rules="inputRules"
+                        label="Ciudad donde vive"
+                        required
+            ></v-combobox>
 
-          <v-subheader dark>Su domicilio actual es</v-subheader>
+
+
+          <v-subheader light>Su domicilio actual es</v-subheader>
 
           <!-- Calle nombre -->
           <v-text-field
@@ -190,11 +183,9 @@
               v => /.+@.+/.test(v) || 'El E-Mail debe ser valido'
       ],
       menu_date_picker:null,
-      items_vinculo:["Madre","Padre","Tutor"],
       items_tipo_doc:["DNI","CI","LC","LE","Cédula Mercosur","Pasaporte extranjero","Cédula de identidad extranjera","Otro documento extranjero","No posee","En trámite"],
       items_sexo:["Masculino","Femenino"],
       items_localidad:["Rio Grande","Ushuaia","Tolhuin"],
-
       alumno:{},
       breadcrumbs: [
         {
@@ -218,17 +209,9 @@
     created: function(){
       store.commit('updateTitle',"Alumno");
 
-      // Se debe setear el tipo de persona a dar de alta
-      this.alumno.email = store.state.user.authApi.email;
-
-      this.alumno.familiar = 1;
-      //this.responsable.alumno= 1;
+      this.alumno.alumno= 1;
 
 
-      // Permite la edicion de los datos del familiar
-      if(store.getters.persona) {
-        this.alumno = store.getters.persona;
-      }
     },
     methods:{
       createPersona:function(){
