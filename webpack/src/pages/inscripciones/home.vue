@@ -121,8 +121,7 @@
         router.go(-1);
       },
       goWithSelected:function(persona){
-        console.log(persona);
-        router.push('/inscripciones/centros');
+        router.push('/inscripciones/finalizar');
       }
     }
   }

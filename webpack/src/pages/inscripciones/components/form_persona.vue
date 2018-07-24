@@ -139,7 +139,7 @@
     <!-- Comentario -->
     <v-textarea
             v-model="form.observaciones"
-            label="Indique instituciones de preferencia"
+            :label="texto_observacion"
             hint="Puede redactar otra observación de interés"
             color="primary"
             counter="100"
@@ -174,6 +174,8 @@
       items_tipo_doc:["DNI","CI","LC","LE","Cédula Mercosur","Pasaporte extranjero","Cédula de identidad extranjera","Otro documento extranjero","No posee","En trámite"],
       items_sexo:["Masculino","Femenino"],
       items_localidad:["Rio Grande","Ushuaia","Tolhuin"],
+
+      texto_observacion: "Observacion",
 
       form:{},
     }),
@@ -210,6 +212,7 @@
       if(this.alumno)
       {
         this.form.alumno= 1;
+        this.texto_observacion = 'Indique instituciones de preferencia';
       }
 
       // Permite la edicion de los datos del familiar
