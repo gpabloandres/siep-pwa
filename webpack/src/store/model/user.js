@@ -8,7 +8,8 @@ const module = {
     authApi: {},
     apiGetUserDataRunning: false,
     porcentaje_perfil: 0,
-    isEdition: false
+    isEdition: false,
+    loggedIn: false
   },
   getters: {
     persona: state => {
@@ -103,7 +104,7 @@ const module = {
         }, 9000);
       })*/
     },
-    apiFindPersona: function({commit,dispatch,state},payload) {
+    apiFindPersona: function({state},payload) {
       console.log('user.apiFindPersona',payload);
 
       const curl = axios.create({
