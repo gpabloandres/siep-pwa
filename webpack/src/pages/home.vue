@@ -1,20 +1,103 @@
 <template>
-  <v-container fluid>
-    <v-slide-y-transition mode="out-in">
-      <v-layout column align-center>
-        <img src="@/assets/escudo.png" alt="SIEP" class="mb-5">
-        <blockquote>
-          &#8220;Sistema de Información Educativa Provincial.&#8221;
-          <footer>
-            <small>
-              <em>&mdash;Tierra del Fuego</em>
-            </small>
-          </footer>
-        </blockquote>
+
+  <v-jumbotron>
+    <v-container fill-height>
+      <v-layout align-center>
+
+          <v-flex xs12 class="text-xs-center">
+            <v-progress-circular
+                    :size="70"
+                    :width="7"
+                    color="orange"
+                    indeterminate
+                    v-if="user.apiGetUserDataRunning"
+            ></v-progress-circular>
+
+            <div v-if="!user.loggedIn && !user.apiGetUserDataRunning">
+              <p class="subheading">Por favor, inicie sesion.</p>
+
+              <div class="text-xs-center">
+                <v-btn round color="primary" small @click="goToLogin">Quiero iniciar sesion</v-btn>
+              </div>
+
+            </div>
+
+            <div v-if="user.loggedIn">
+              <h3 class="display-2 font-weight-bold" >Bienvenido</h3>
+
+              <h3 v-if="persona" class="display-1">
+                {{persona.nombres }} {{persona.apellidos }}
+              </h3>
+
+              <v-divider class="my-3"></v-divider>
+
+              <div v-if="!persona" >
+                <p class="subheading">Por favor, complete sus datos personales para poder continuar.</p>
+
+                <v-divider class="my-3"></v-divider>
+
+                <v-flex>
+                  <v-btn class="mx-0" color="success" large @click="goToFamiliar('create')">
+                    <v-icon left>how_to_reg</v-icon>Completar perfil
+                  </v-btn>
+                </v-flex>
+              </div>
+              <!-- EN CASO DE QUE LA PERSONA ESTE DEFINIDA -->
+              <div v-else>
+
+                <!-- EDICION DE PERSONA -->
+                <!--
+                <v-flex>
+                  <v-btn class="mx-0" color="orange" dark large @click="goToFamiliar('update')">
+                    <v-icon left>edit</v-icon>Editar  mi perfil
+                  </v-btn>
+                </v-flex>
+                -->
+
+                <v-flex>
+                  <v-btn class="mx-0" color="primary" large @click="goToStudent">
+                    <v-icon left>how_to_reg</v-icon>Registrar Alumno
+                  </v-btn>
+                </v-flex>
+              </div>
+
+            </div>
+
+          </v-flex>
+
       </v-layout>
-    </v-slide-y-transition>
-  </v-container>
+    </v-container>
+  </v-jumbotron>
+
 </template>
+<script>
+  import router from '../router'
+
+  export default{
+    created: function(){
+      store.commit('updateTitle',"Siep");
+    },
+    computed:{
+      user(){
+        return store.state.user
+      },
+      persona(){
+        return store.getters.persona;
+      },
+    },
+    methods:{
+      goToLogin:function(){
+        router.push('/')
+      },
+      goToFamiliar:function(mode){
+        router.push(`/inscripciones/familiar/${mode}`)
+      },
+      goToStudent:function(){
+        router.push('/inscripciones')
+      }
+    }
+  }
+</script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
