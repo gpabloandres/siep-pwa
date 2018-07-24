@@ -5,12 +5,12 @@ const menu = {
       icon: 'home',
       title: 'Inicio',
       name: 'home'
+    },
+    {
+      icon: 'people',
+      title: 'Inscripciones',
+      name: 'inscripciones.instituciones'
     }
-    // {
-    //   icon: 'people',
-    //   title: 'Inscripciones',
-    //   name: 'inscripciones'
-    // }
   ]
 };
 
