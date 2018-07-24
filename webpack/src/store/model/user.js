@@ -131,7 +131,14 @@ const module = {
             // handle success
             if(response.data.persona.id)
             {
-              dispatch('apiGetUserData');
+              if(payload.familiar)
+              {
+                dispatch('apiGetUserData');
+              } else {
+                router.push({
+                  path: '/inscripciones/finalizar'
+                });
+              }
             } else {
               console.log(response.data);
             }
