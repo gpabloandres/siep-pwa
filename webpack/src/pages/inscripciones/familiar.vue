@@ -14,7 +14,7 @@
       </v-breadcrumbs>
 
       <!-- Formulario de registro de persona-->
-      <form-persona familiar="true" mode="create" title="Familiar (Padre, Madre o Tutor)"/>
+      <form-persona familiar="true" :mode="$route.params.mode" title="Familiar (Padre, Madre o Tutor)"/>
     </v-container>
 </template>
 
@@ -40,7 +40,7 @@
 
     },
     created: function(){
-      store.commit('updateTitle',"Familiar (Padre, Madre o Tutor)");
+
     },
     methods:{
 

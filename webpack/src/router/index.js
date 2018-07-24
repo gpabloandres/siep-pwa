@@ -40,7 +40,7 @@ export default new Router({
       component: centros
     },
     {
-      path: '/inscripciones/familiar',
+      path: '/inscripciones/familiar/:mode',
       name: 'inscripciones.familiar',
       component: familiar
     },
