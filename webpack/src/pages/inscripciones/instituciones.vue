@@ -27,18 +27,23 @@
                             @click="findInstitution"
                             :loading="searching"
                     >
-                        <v-icon left :disabled="!valid">search</v-icon>Buscar
+                        <v-icon left large>search</v-icon>Buscar
 
                     </v-btn>
                 </v-container>
 
 
                     <!-- Resultados de busqueda -->
-                    <v-card v-for="item in resultado">
+		<div v-for="item in resultado">
+                    <v-card>
                         <v-divider></v-divider>
                         <v-list dense>
+                            <h3 class="subheading mb-0 align-start">{{ item.nombre }}</h3>
                             <v-list-tile>
-                                <v-list-tile-content class="align-content-center">{{ item.nombre }}</v-list-tile-content>
+                                <v-list-tile-content class="align-content-center">Dirección: {{ item.direccion }}</v-list-tile-content>
+                            </v-list-tile>
+                            <v-list-tile>
+                                <v-list-tile-content class="align-content-center">Teléfono: {{ item.telefono }}</v-list-tile-content>
                             </v-list-tile>
                         </v-list>
                     </v-card>
@@ -46,6 +51,7 @@
                   <v-divider class="my-3"></v-divider>
 
                 <v-btn color="primary" @click="goBack"><v-icon>navigate_before</v-icon> Volver</v-btn>
+		</div>
             </v-flex>
     </v-container>
 </template>

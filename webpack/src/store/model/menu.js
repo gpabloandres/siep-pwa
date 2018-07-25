@@ -7,8 +7,8 @@ const menu = {
       name: 'home'
     },
     {
-      icon: 'people',
-      title: 'Inscripciones',
+      icon: 'school',
+      title: 'Instituciones',
       name: 'inscripciones.instituciones'
     }
   ]
