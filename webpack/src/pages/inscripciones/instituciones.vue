@@ -37,8 +37,12 @@
                     <v-card v-for="item in resultado">
                         <v-divider></v-divider>
                         <v-list dense>
+                            <h3 class="subheading mb-0 align-start">{{ item.nombre }}</h3>
                             <v-list-tile>
-                                <v-list-tile-content class="align-content-center">{{ item.nombre }}</v-list-tile-content>
+                                <v-list-tile-content class="align-content-center">Dirección: {{ item.direccion }}</v-list-tile-content>
+                            </v-list-tile>
+                            <v-list-tile>
+                                <v-list-tile-content class="align-content-center">Teléfono: {{ item.telefono }}</v-list-tile-content>
                             </v-list-tile>
                         </v-list>
                     </v-card>
@@ -82,7 +86,7 @@
           baseURL: vm.apigw
         });
 
-        return curl.get('/api/forms/centros',{
+        return curl.get('/api/forms/centros?ciudad='+vm.filtro.ciudad+'&sector='+vm.filtro.sector+'&nivel_servicio='+vm.filtro.nivel_servicio,{
           params: vm.filtro
         })
           .then(function (response) {
