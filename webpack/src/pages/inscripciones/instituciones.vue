@@ -86,7 +86,7 @@
           baseURL: vm.apigw
         });
 
-        return curl.get('/api/forms/centros',{ciudad:vm.filtro.ciudad , sector:vm.filtro.sector , nivel_servicio:vm.filtro.nivel_servicio})
+        return curl.get('/api/forms/centros',{params : vm.filtro})
           .then(function (response) {
             let render = response.data.map(function(x) {
               return x;
