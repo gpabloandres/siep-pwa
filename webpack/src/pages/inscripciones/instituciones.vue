@@ -1,30 +1,23 @@
 <template>
     <v-container fluid text-xs-center>
-        <v-form v-model="valid">
-            <v-flex xs12 sm6 md4 lg4>
+      <v-flex xs12 sm6 md4 lg4>
 
                 <v-combobox
-                        v-model="comboboxes.ciudad"
-                        :items="resultado.ciudades"
-                        :loading="loading_ciudad"
+                        v-model="filtro.ciudad"
+                        :items="combo_ciudades"
                         label="Seleccione Ciudad"
-                        required
                 ></v-combobox>
 
-
                 <v-combobox
-                        v-model="comboboxes.nivel"
-                        :items="resultado.niveles"
-                        :loading="loading_nivel"
+                        v-model="filtro.nivel_servicio"
+                        :items="combo_niveles"
                         label="Seleccione Nivel"
-                        required
                 ></v-combobox>
 
                 <v-combobox
-                        v-model="comboboxes.sector"
-                        :items="combo_sector"
+                        v-model="filtro.sector"
+                        :items="combo_sectores"
                         label="Seleccione Sector"
-                        required
                 ></v-combobox>
 
                 <v-container>
@@ -41,42 +34,19 @@
 
 
                     <!-- Resultados de busqueda -->
-                    <v-data-iterator
-                            :items="resultado.centros"
-                            hide-actions
-                            no-data-text=""
-                            content-tag="v-layout"
-                            row
-                            wrap
-                    >
-                        <v-flex
-                                slot="item"
-                                slot-scope="props"
-                                xs12
-                                sm12
-                                md12
-                                lg12
-                        >
-                            <v-card>
-                                <v-divider></v-divider>
-                                <v-list dense>
-                                    <v-list-tile>
-                                        <v-list-tile-content class="align-content-center">{{ props.item.nombre }}</v-list-tile-content>
-                                    </v-list-tile>
-                                </v-list>
-                            </v-card>
-                        </v-flex>
-                    </v-data-iterator>
+                    <v-card v-for="item in resultado">
+                        <v-divider></v-divider>
+                        <v-list dense>
+                            <v-list-tile>
+                                <v-list-tile-content class="align-content-center">{{ item.nombre }}</v-list-tile-content>
+                            </v-list-tile>
+                        </v-list>
+                    </v-card>
 
-                    <!-- /Resultado de Busqueda -->
-
-
-                <v-divider class="my-3"></v-divider>
+                  <v-divider class="my-3"></v-divider>
 
                 <v-btn color="primary" @click="goBack"><v-icon>navigate_before</v-icon> Volver</v-btn>
             </v-flex>
-        </v-form>
-
     </v-container>
 </template>
 
@@ -86,106 +56,54 @@
   export default {
     created: function(){
       store.commit('updateTitle',"SIEP | Instituciones");
-      console.log(this.alumno);
-      this.nivelItems();
-      this.ciudadesItems();
     },
     data: ()=>({
       error:"",
-      valid:false,
       searching:false,
-      loading_nivel:true,
-      loading_ciudad:true,
       headers:['Nombre'],
+
       apigw: process.env.SIEP_API_GW_INGRESS,
-      combo_sector:["ESTATAL","PRIVADO"],
-      comboboxes:[],
+
+      filtro:{},
       resultado:[],
-      items_breadcumbs: [
-        {
-          text: 'Paso 1',
-          disabled: false
-        },
-        {
-          text: 'Paso 2',
-          disabled: false
-        },
-        {
-          text: 'Pasoss3',
-          disabled: false
-        }
-      ]
+
+      combo_ciudades: ['Ushuaia','Tolhuin','Rio Grande'],
+      combo_niveles: ['Común - Inicial','Común - Primario','Común - Secundario'],
+      combo_sectores:["ESTATAL","PRIVADO"],
     }),
     computed:{
-      centros(){
-        return store.state.instituciones
-      }
     },
-    name: "instituciones",
     methods:{
-      goForward:function(){
-        router.push('/inscripciones/finalizar');
-      },
-      goBack:function(){
-        router.go(-1);
-      },
       findInstitution: function () {
         var vm = this;
-        this.searching = true;
-        axios.get(vm.apigw+'/api/forms/centros?ciudad='+vm.comboboxes.ciudad+'&sector='+vm.comboboxes.sector+'&nivel_servicio='+vm.comboboxes.nivel)
+        vm.searching = true;
+
+        const curl = axios.create({
+          baseURL: vm.apigw
+        });
+
+        return curl.get('/api/forms/centros',{
+          params: vm.filtro
+        })
           .then(function (response) {
             let render = response.data.map(function(x) {
               return x;
             });
 
-            vm.resultado.centros = render;
+            vm.resultado = render;
+
             vm.searching = false;
-          })
-          .catch(function (error) {
-            vm.error = error.message;
-            console.log(vm.error);
-            vm.searching = false;
-          });
-
-      },
-      nivelItems: function () {
-        var vm = this;
-        axios.get(vm.apigw+'/api/forms/niveles')
-          .then(function (response) {
-            let render = response.data.map(function(x) {
-              return x.nivel_servicio;
-            });
-
-            vm.resultado.niveles = render;
-            vm.loading_nivel = false;
-
           })
           .catch(function (error) {
             vm.error = error.message;
             vm.loading_nivel = false;
             console.log(vm.error);
 
+            vm.searching = false;
           });
-
-
       },
-      ciudadesItems: function () {
-        var vm = this;
-        axios.get(vm.apigw+'/api/forms/ciudades')
-          .then(function (response) {
-            let render = response.data.map(function(x) {
-              return x.nombre;
-            });
-
-            vm.resultado.ciudades = render;
-            vm.loading_ciudad = false;
-          })
-          .catch(function (error) {
-            vm.error = error.message;
-            console.log(vm.error);
-            vm.loading_ciudad = false;
-          });
-
+      goBack:function(){
+        router.go(-1);
       }
     }
   }
