@@ -27,6 +27,9 @@
   import router from '../router'
 
   export default {
+    created: function(){
+      store.commit('updateTitle',"SIEP | LogIn");
+    },
     data(){
       return{
         color: '#5C6BC0',

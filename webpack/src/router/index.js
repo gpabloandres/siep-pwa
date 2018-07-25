@@ -6,7 +6,7 @@ import login from '@/pages/login'
 import home from '@/pages/home'
 import inscripciones_home from '@/pages/inscripciones/home'
 import alumno from '@/pages/inscripciones/alumno'
-import centros from '@/pages/inscripciones/centros'
+import instituciones from '@/pages/inscripciones/instituciones'
 import familiar from '@/pages/inscripciones/familiar'
 import finalizar from '@/pages/inscripciones/finalizar'
 
@@ -35,9 +35,9 @@ export default new Router({
       component: alumno
     },
     {
-      path: '/inscripciones/centros',
-      name: 'inscripciones.centros',
-      component: centros
+      path: '/inscripciones/instituciones',
+      name: 'inscripciones.instituciones',
+      component: instituciones
     },
     {
       path: '/inscripciones/familiar/:mode',
