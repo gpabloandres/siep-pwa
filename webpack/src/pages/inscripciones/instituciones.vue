@@ -34,7 +34,8 @@
 
 
                     <!-- Resultados de busqueda -->
-                    <v-card v-for="item in resultado">
+		<div v-for="item in resultado">
+                    <v-card>
                         <v-divider></v-divider>
                         <v-list dense>
                             <h3 class="subheading mb-0 align-start">{{ item.nombre }}</h3>
@@ -50,6 +51,7 @@
                   <v-divider class="my-3"></v-divider>
 
                 <v-btn color="primary" @click="goBack"><v-icon>navigate_before</v-icon> Volver</v-btn>
+		</div>
             </v-flex>
     </v-container>
 </template>
@@ -86,7 +88,9 @@
           baseURL: vm.apigw
         });
 
-        return curl.get('/api/forms/centros',{params : vm.filtro})
+        return curl.get('/api/forms/centros',{
+          params: vm.filtro
+        })
           .then(function (response) {
             let render = response.data.map(function(x) {
               return x;
