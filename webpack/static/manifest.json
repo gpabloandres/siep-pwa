@@ -1,20 +1,20 @@
 {
-  "name": "pwa",
-  "short_name": "pwa",
+  "name": "SIEP",
+  "short_name": "SIEP",
   "icons": [
     {
-      "src": "/static/img/icons/android-chrome-192x192.png",
+      "src": "/static/img/icons/siep-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/static/img/icons/android-chrome-512x512.png",
+      "src": "/static/img/icons/siep-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
   ],
   "start_url": "/index.html",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#4DBA87"
+  "background_color": "#FFFFFF",
+  "theme_color": "#FF8A00"
 }
