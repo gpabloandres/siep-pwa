@@ -1,5 +1,5 @@
 <template>
-    <v-container fluid text-xs-center>
+    <v-container fluid text-xs-center id="top">
       <v-flex xs12 sm6 md4 lg4>
 
                 <v-combobox
@@ -32,41 +32,71 @@
                     </v-btn>
                 </v-container>
 
+          <v-divider class="my-2"></v-divider>
+          <v-btn color="primary" @click="goBack"><v-icon>navigate_before</v-icon> Volver</v-btn>
 
-                    <!-- Resultados de busqueda -->
-		<div v-for="item in resultado">
-                    <v-card>
-                        <v-divider></v-divider>
-                        <v-list dense>
-                            <h3 class="subheading mb-0 align-start">{{ item.nombre }}</h3>
-                            <v-list-tile>
-                                <v-list-tile-content class="align-content-center">Dirección: {{ item.direccion }}</v-list-tile-content>
-                            </v-list-tile>
-                            <v-list-tile>
-                                <v-list-tile-content class="align-content-center">Teléfono: {{ item.telefono }}</v-list-tile-content>
-                            </v-list-tile>
-                        </v-list>
-                    </v-card>
+            <!-- Resultados de busqueda -->
+            <div v-for="item in resultado">
+                <v-card>
+                    <v-divider></v-divider>
+                    <v-list dense>
+                        <h3 class="subheading mb-0 align-start">{{ item.nombre }}</h3>
+                        <v-list-tile>
+                            <v-list-tile-content class="align-content-center">Dirección: {{ item.direccion }}</v-list-tile-content>
+                        </v-list-tile>
+                        <v-list-tile>
+                            <v-list-tile-content class="align-content-center">Teléfono: {{ item.telefono }}</v-list-tile-content>
+                        </v-list-tile>
+                    </v-list>
+                </v-card>
+            </div>
 
-                  <v-divider class="my-3"></v-divider>
+          <v-card-text style="height: 100px; position: relative">
+              <v-fab-transition>
+                  <v-btn
+                          v-show="!hidden"
+                          color="primary"
+                          dark
+                          fixed
+                          bottom
+                          right
+                          fab
+                          @click="$vuetify.goTo(target, options)"
+                          hint="Subir al Inicio"
+                  >
+                      <v-icon>vertical_align_top</v-icon>
+                  </v-btn>
+              </v-fab-transition>
+          </v-card-text>
 
-                <v-btn color="primary" @click="goBack"><v-icon>navigate_before</v-icon> Volver</v-btn>
-		</div>
-            </v-flex>
+      </v-flex>
     </v-container>
 </template>
 
 <script>
   import router from '../../router'
   import axios from 'axios'
+  import * as easings from 'vuetify/es5/util/easing-patterns'
+
   export default {
     created: function(){
       store.commit('updateTitle',"SIEP | Instituciones");
     },
     data: ()=>({
+      type: 'number',
+      number: 9999,
+      selector: '#top',
+      selected: 'Button',
+      elements: ['Button', 'Radio group'],
+      duration: 300,
+      offset: 0,
+      easing: 'easeInOutCubic',
+      easings: Object.keys(easings),
+
       error:"",
       searching:false,
       headers:['Nombre'],
+      hidden:false,
 
       apigw: process.env.SIEP_API_GW_INGRESS,
 
@@ -78,6 +108,22 @@
       combo_sectores:["ESTATAL","PRIVADO"],
     }),
     computed:{
+      target () {
+        const value = 0;
+        if (!isNaN(value)) return Number(value)
+        else return value
+      },
+      options () {
+        return {
+          duration: this.duration,
+          offset: this.offset,
+          easing: this.easing
+        }
+      },
+      element () {
+        if (this.selected === 'Button') return this.$refs.button
+        else if (this.selected === 'Radio group') return this.$refs.radio
+      }
     },
     methods:{
       findInstitution: function () {
@@ -110,6 +156,11 @@
       },
       goBack:function(){
         router.go(-1);
+      },
+      goTop:function(){
+        var element = document.getElementById("top");
+        var top = element.offsetTop;
+        window.scrollTo(0, top);
       }
     }
   }

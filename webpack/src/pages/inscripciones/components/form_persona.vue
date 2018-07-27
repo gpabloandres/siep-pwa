@@ -257,7 +257,7 @@
         return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
       },
       observacionPlaceHolder(){
-        if(this.alumno){
+        if(this.familiar){
           this.observacion_placeholder = "Si su hijo/a ya pertenece al sistema educativo pcial indique institución de preferencia";
         }else{
           this.observacion_placeholder = "";
