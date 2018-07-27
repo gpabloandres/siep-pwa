@@ -32,7 +32,7 @@
       },
       {
         text: 'Paso 2',
-        disabled: true
+        disabled: false
       }
     ]
   }),
