@@ -69,26 +69,7 @@
                   </v-btn>
               </v-fab-transition>
           </v-card-text>
-
       </v-flex>
-
-                    <!-- Resultados de busqueda -->
-            <div v-for="item in resultado">
-                            <v-card>
-                                <v-divider></v-divider>
-                                <v-list dense>
-                                    <h3 class="subheading mb-0 align-start">{{ item.nombre }}</h3>
-                                    <v-list-tile>
-                                        <v-list-tile-content class="align-content-center">Dirección: {{ item.direccion }}</v-list-tile-content>
-                                    </v-list-tile>
-                                    <v-list-tile>
-                                        <v-list-tile-content class="align-content-center">Teléfono: {{ item.telefono }}</v-list-tile-content>
-                                    </v-list-tile>
-                                </v-list>
-                            </v-card>
-
-            </div>
-            </v-flex>
     </v-container>
 </template>
 
