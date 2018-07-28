@@ -32,6 +32,7 @@
                     </v-btn>
                 </v-container>
 
+
           <v-divider class="my-2"></v-divider>
           <v-btn color="primary" @click="goBack"><v-icon>navigate_before</v-icon> Volver</v-btn>
 
@@ -68,7 +69,6 @@
                   </v-btn>
               </v-fab-transition>
           </v-card-text>
-
       </v-flex>
     </v-container>
 </template>
