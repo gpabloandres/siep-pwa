@@ -10,6 +10,11 @@ const menu = {
       icon: 'school',
       title: 'Instituciones',
       name: 'inscripciones.instituciones'
+    },
+    {
+      icon: 'power_settings_new',
+      title: 'Cerrar Sesion',
+      name: 'login'
     }
   ]
 };

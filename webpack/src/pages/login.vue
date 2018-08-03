@@ -14,7 +14,6 @@
                     <v-btn round color="red darken-1" dark @click="goTo('google')">Ingresar con Google</v-btn>
                 </div>
 
-
             </v-layout>
         </v-slide-y-transition>
     </v-container>
@@ -29,6 +28,7 @@
   export default {
     created: function(){
       store.commit('updateTitle',"SIEP | LogIn");
+      this.logout();
     },
     data(){
       return{
@@ -38,12 +38,19 @@
     },
     components :{ FacebookIcon,GoogleIcon  },
     name: "login",
+    computed:{
+      user(){
+        return store.state.user
+      }
+    },
     methods:{
       goTo : function(social){
         window.location = this.apigw+'/auth/social/'+social;
       },
-      logout: function(){
-        store.dispatch('logout');
+      logout : function(){
+        if(this.user.loggedIn){
+          store.dispatch('logout');
+        }
       }
     }
   }
