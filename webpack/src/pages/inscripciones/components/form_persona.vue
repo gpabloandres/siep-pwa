@@ -35,7 +35,7 @@
         v-model="menu_date_picker"
         :nudge-right="40"
         lazy
-        transition="sczale-transition"
+        transition="scale-transition"
         offset-y
         full-width
         max-width="290px"
@@ -44,13 +44,51 @@
             slot="activator"
             v-model="computedDateFormatted"
             label="Fecha de Nacimiento"
-            hint="DD/MM/YYYY"
+            hint="DD/MM/AAAA"
             persistent-hint
             prepend-icon="event"
             readonly
         ></v-text-field>
-        <v-date-picker v-model="form.fecha_nac" no-title @input="menu_date_picker = false" ></v-date-picker>
+        <v-date-picker
+            ref="picker"
+            v-model="form.fecha_nac"
+            locale="es-ar"
+            no-title
+            @input="menu_date_picker = false"
+            :max="new Date().toISOString().substr(0, 10)"
+            min="1950-01-01"
+        ></v-date-picker>
     </v-menu>
+
+    <!--<v-menu-->
+            <!--ref="menu"-->
+            <!--:close-on-content-click="false"-->
+            <!--v-model="menu_date_picker"-->
+            <!--:nudge-right="40"-->
+            <!--lazy-->
+            <!--transition="scale-transition"-->
+            <!--offset-y-->
+            <!--full-width-->
+            <!--min-width="290px"-->
+    <!--&gt;-->
+      <!--<v-text-field-->
+            <!--slot="activator"-->
+            <!--v-model="computedDateFormatted"-->
+            <!--label="Fecha de Nacimiento"-->
+            <!--hint="DD/MM/AAAA"-->
+            <!--persistent-hint-->
+            <!--prepend-icon="event"-->
+            <!--readonly-->
+      <!--&gt;</v-text-field>-->
+      <!--<v-date-picker-->
+            <!--ref="picker"-->
+            <!--v-model="form.fecha_nac"-->
+            <!--locale="es-ar"-->
+            <!--:max="new Date().toISOString().substr(0, 10)"-->
+            <!--min="1950-01-01"-->
+            <!--@change="save"-->
+      <!--&gt;</v-date-picker>-->
+    <!--</v-menu>-->
 
     <!-- Sexo -->
     <v-combobox
@@ -193,6 +231,9 @@
       texto_observacion: "Observación",
 
       form:{},
+
+      date: null,
+      menu: false
     }),
     computed:{
       user(){
@@ -234,6 +275,11 @@
 
       // Permite la edicion de los datos del familiar
     },
+    watch: {
+      menu_date_picker (val) {
+        val && this.$nextTick(() => (this.$refs.picker.activePicker = 'YEAR'))
+      }
+    },
     methods:{
       createPersona:function(){
         store.dispatch('apiCreatePersona',this.form);
@@ -262,6 +308,9 @@
         }else{
           this.observacion_placeholder = "";
         }
+      },
+      save (computedDateFormatted) {
+        this.$refs.menu.save(computedDateFormatted)
       }
     }
   }
