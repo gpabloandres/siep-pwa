@@ -80,7 +80,7 @@
         },
         {
           text: 'Paso 2',
-          disabled: false
+          disabled: true
         }
       ]
     }),
@@ -104,7 +104,8 @@
         })
           .then(function (response) {
             // handle success
-            vm.resultado = response.data.persona;
+            vm.resultado = response.data.data;
+            console.log(response.data.data);
             vm.findPersonaRunning = false;
         })
           .catch(function (error) {
