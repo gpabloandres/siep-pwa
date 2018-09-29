@@ -28,10 +28,14 @@
       breadcrumbs: [
         {
           text: 'Paso 1',
-          disabled: false
+          disabled: true
         },
         {
           text: 'Paso 2',
+          disabled: true
+        },
+        {
+          text: 'Finalizado',
           disabled: true
         }
       ]
