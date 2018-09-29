@@ -111,9 +111,13 @@ const module = {
       // Header con token
       curl.defaults.headers.common['Authorization'] = `Bearer ${state.authToken}`;
 
-      return curl.get('/api/personas',{
+      var response = curl.get('/api/personas',{
         params: payload
       });
+
+      console.log(response);
+
+      return response;
     },
     apiCreatePersona: function({commit,dispatch,state},payload) {
       console.log('user.apiCreatePersona',payload);
