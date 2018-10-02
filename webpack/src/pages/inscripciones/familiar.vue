@@ -33,6 +33,10 @@
         {
           text: 'Paso 2',
           disabled: true
+        },
+        {
+          text: 'Finalizado',
+          disabled: true
         }
       ]
     }),

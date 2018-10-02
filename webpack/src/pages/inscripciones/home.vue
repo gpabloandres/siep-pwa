@@ -76,11 +76,15 @@
       breadcrumbs: [
         {
           text: 'Paso 1',
-          disabled: true
+          disabled: false
         },
         {
           text: 'Paso 2',
           disabled: false
+        },
+        {
+          text: 'Finalizado',
+          disabled: true
         }
       ]
     }),
@@ -104,7 +108,8 @@
         })
           .then(function (response) {
             // handle success
-            vm.resultado = response.data.persona;
+            vm.resultado = response.data.data;
+            console.log(response.data.data);
             vm.findPersonaRunning = false;
         })
           .catch(function (error) {
