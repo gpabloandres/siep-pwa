@@ -45,7 +45,7 @@
     },
     methods:{
       goTo : function(social){
-        window.location = this.apigw+'/auth/social/'+social;
+        window.location = this.apigw+'/auth/social/'+social+'?app=siep-pwa';
       },
       logout : function(){
         if(this.user.loggedIn){
